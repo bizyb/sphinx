@@ -1,0 +1,8 @@
+CREATE DATABASE api_docs;
+CREATE USER sphinx_user WITH PASSWORD 'J8OYaRjrQMfUZqKeClIWPgzu0oFpBnju';
+ALTER ROLE sphinx_user SET client_encoding TO 'utf8';
+ALTER ROLE sphinx_user SET default_transaction_isolation TO 'read committed';
+ALTER ROLE sphinx_user SET timezone TO 'UTC';
+ALTER DATABASE api_docs OWNER TO sphinx_user;
+
+
