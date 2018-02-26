@@ -25,7 +25,7 @@ from sphinxsite.services import helper
 #         -say 'you've been logged out, etc. and show a link to go to the login page 
 
 def apidocs(request):
-    pass
+    
 
     # - make sure the user is logged in first
     # -if user logged in, let them see the apidocs landing page
@@ -33,6 +33,7 @@ def apidocs(request):
     # -else: redirect to the homepage for login
     #     return the login form 
     # return render(request, 'the_sphinx_landing_page.html', {'f': form})
+    return render(request, 'login.html', {})
 
 
 def validate_invite(request):
@@ -61,16 +62,16 @@ def validate_invite(request):
 def signup(request):
 	
     context = helper.process_form_data(request)
-    if context['status'] == 'SUCCESS':
+    if context.get('status') == 'SUCCESS':
         username = context.get('form_data').get('username')
         raw_password = context.get('form_data').get('password')
         user = authenticate(username=username, password=raw_password)
         login(request, user)
         return redirect('apidocs')
-    elif context['status'] == 'UKNOWN':
+    # elif context['status'] == 'UKNOWN':
         # validation is handled through an ajax call; if it fails, signup is never called,
         # except to populate the initial form
-        pass
+        # pass
         # handle validation failure here
 
     return render(request, 'signup.html', {'form': context.get('form')})

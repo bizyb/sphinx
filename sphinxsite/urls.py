@@ -31,8 +31,9 @@ from . import views
 # admin.autodiscover()
 
 urlpatterns = [
-    url(r'^$', views.signup, name='signup'),
-    url(r'^apidocs/$', views.apidocs, name='apidocs'),
+    url(r'^$', views.apidocs, name='apidocs'),
+    # url(r'^$', views.signup, name='signup'),
+    
     # url(r'^data-interpretation/$', cache_page(CACHE_LENGTH)(views.data_interpretation), name='interpretation'),
     # url(r'^terms/$', cache_page(CACHE_LENGTH)(views.terms), name='terms'),
     # url(r'^privacy/$', cache_page(CACHE_LENGTH)(views.privacy), name='privacy'),

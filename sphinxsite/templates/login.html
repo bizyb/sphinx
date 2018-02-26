@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script>
+	function loadForm(formID) {
+		
+		if (formID == "signup") {
+			document.getElementById("signup").style.display = "block"
+			document.getElementById("login").style.display = "none"
+		}
+		else if (formID == "login") {
+			document.getElementById("signup").style.display = "none"
+			document.getElementById("login").style.display = "block"
+		}
+
+	}
+</script>
+<div class="login-page">
+  <div class="form">
+  	<div id="signup">
+    <form class="register-form" action="" method="post">
+ 		{% csrf_token %}
+      <input type="text" name="first_name" placeholder="First Name" required/>
+      <input type="text" name="last_name" placeholder="Last Name" required/>
+      <input type="text" name="username" placeholder="Username" required/> <!--check if username already exists-->
+      <input type="email" name="email" placeholder="Email" required/>
+
+
+      <input type="password" placeholder="Create a password" name="password1" required/>
+      <input type="password" placeholder="Confirm your password" name="password2" required/> <!--check if passwords match-->
+      <div class="team-dropdown">Team
+      <select name="team_name" id="team">
+      	<option value="3d">3D</option>
+          <option value="android">Android</option>
+          <option value="backend">Backend</option>
+          <option value="frontend">Frontend</option>
+          <option value="ios">iOS</option>
+          <option value="ml">ML</option>
+       </select>
+   </div>
+       <input type="text" name="invite_code" placeholder="Invite code" required/>
+
+      <button>create</button>
+      <p class="message" onclick="loadForm('login')">Already registered? <a href="#">Sign In</a></p>
+    </form>
+</div>
+<div id="login">
+    <form class="login-form" action="" method="post">
+    	{% csrf_token %}
+      <input type="text" placeholder="username"/>
+      <input type="password" placeholder="password"/>
+      <button>login</button>
+      <p class="message" onclick="loadForm('signup')">Not registered? <a >Create an account</a></p>
+      <p class="message"> Coming Soon: <a>Forgot password?</a></p>
+    </form>
+</div>
+  </div>
+</div>
+
+
+{% endblock %}
