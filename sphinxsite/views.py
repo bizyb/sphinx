@@ -70,7 +70,7 @@ def validate_invite(request):
     username = request.POST.get('invite_code')
     # exists = sphinx_models.SiteUser.objects.filter(user__username=username).exists()
     # response = {'available': not exists}
-    response = {'status': 'SUCCESS'}
+    response = {'status': 'FAIL'}
     return JsonResponse(response)
 
 

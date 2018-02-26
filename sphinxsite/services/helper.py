@@ -10,7 +10,7 @@ def process_form_data(request):
 	and save it to the database. Return a context dictionary to populate 
 	post-submission messages or perform redirects.
 	'''
-	context = {'success': False}
+	context = {'status': 'UKNOWN'}
 	try:
 		if request.method == 'GET':
 			f = SignUpForm() 
@@ -28,7 +28,7 @@ def process_form_data(request):
 				}
 				# save the form to the db
 				sphinx_models.SiteUser.objects.create(**record)
-				context['success'] = True
+				context['status'] = 'SUCCESS'
 				context['form_data'] = entry
 				msg = "New signup form: {}".format(record)
 				logger.info(msg)

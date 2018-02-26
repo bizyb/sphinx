@@ -5,6 +5,9 @@
 	
 	var failIcon = '&#10007;'; // x
 	var passIcon = '&#10003;'; // checkmark
+	var passwordValidated = false;
+	var inviteValidated = false;
+	var usernameValidated = false;
 
 	function successIcon(elemID, icon, status) {
 		
@@ -16,7 +19,7 @@
 	}
 
 	function ajaxValidation(valueType, value, elemID) {
-
+		var validated = false;
 		if (value != "") {
 			var url;
 			var csrftoken = Cookies.get('csrftoken');
@@ -34,13 +37,23 @@
 	   		xmlhttp.onreadystatechange = function() {
 			    if (this.readyState == 4 && this.status == 200) {
 			        var jsonObj = JSON.parse(this.responseText);
-			        if (jsonObj.status == 'SUCCESS') successIcon(elemID, passIcon, "success");
-			        else successIcon(elemID, failIcon, "fail");
+			        if (jsonObj.status == 'SUCCESS') {
+			        	successIcon(elemID, passIcon, "success");
+			        	validated = true;
+			        }
+			        else {
+			        	successIcon(elemID, failIcon, "fail");
+			        	validated = false;
+			        }
 			    }
 			};
    		}
 
-   		else successIcon(elemID, "", "reset");
+   		else {
+   			successIcon(elemID, "", "reset");
+   			validated = false;
+   		}
+   		return validated;
 	}
 
 	function usernameExists(input) {
@@ -50,7 +63,8 @@
 
 	function validateInvite(input) {
 
-		ajaxValidation("invite_code", input.value, "invite-is-valid");
+		var success = ajaxValidation("invite_code", input.value, "invite-is-valid");
+		console.log(success);
 	}
 
 	function loadForm(formID) {
@@ -96,14 +110,16 @@
 
 	// function formSubmit() {
 
-	// 	console.log()
+	// 	if (passwordValidated && inviteValidated && usernameValidated) {
+	// 		// submit form
+	// 	}
 
 	// }
 </script>
 <div class="login-page">
   <div class="form">
   	<div id="signup">
-    <form class="register-form" action="" method="post" onload="disableButton()">
+    <form class="register-form" action="" method="post">
  		{% csrf_token %}
       <input type="text" name="first_name" placeholder="First Name" required/>
       <input type="text" name="last_name" placeholder="Last Name" required/>
@@ -129,7 +145,7 @@
           <option value="ml">ML</option>
        </select>
    </div>
-       <div><input type="text" name="invite_code" placeholder="Invite code" required onkeyup="validateInvite()"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
+       <div><input type="text" name="invite_code" placeholder="Invite code" required onkeyup="validateInvite(this)"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
 
       <button id="signup-button" onclick="formSubmit()">Register</button>
 
