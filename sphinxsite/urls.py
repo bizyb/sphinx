@@ -32,7 +32,9 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.apidocs, name='apidocs'),
+    url(r'^username-availability$', views.username_availability, name='username-availability'),
     # url(r'^$', views.signup, name='signup'),
+
     
     # url(r'^data-interpretation/$', cache_page(CACHE_LENGTH)(views.data_interpretation), name='interpretation'),
     # url(r'^terms/$', cache_page(CACHE_LENGTH)(views.terms), name='terms'),

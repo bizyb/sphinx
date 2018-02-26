@@ -1,6 +1,16 @@
+import json
+from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
+from django.http import HttpResponse
+from django.core import serializers
 from django.shortcuts import render, redirect
 from sphinxsite.services import helper
+from sphinxsite import models as sphinx_models
+
+from sphinxsite.services import loggers
+logger = loggers.Loggers(__name__).get_logger()
+
+
 
 
 # Workflow:
@@ -75,3 +85,12 @@ def signup(request):
         # handle validation failure here
 
     return render(request, 'signup.html', {'form': context.get('form')})
+
+def username_availability(request):
+  
+    username = request.POST.get('username')
+    exists = sphinx_models.SiteUser.objects.filter(user__username=username).exists()
+    response = {'available': exists}
+    return JsonResponse(response)
+
+    

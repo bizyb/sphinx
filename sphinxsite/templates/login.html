@@ -1,14 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<script>
+<script type="text/javascript">
 	
 
-	function usernameExists() {
+	function updateField(jsonObj) {
 
-		var invalid = '&#10007;'; // x
-		var valid = '&#10003;'; // checkmark
-		document.getElementById('username-exists').innerHTML = valid;
+	   	var unavailable = '&#10007;'; // x
+		var available = '&#10003;'; // checkmark
+
+		if (jsonObj.available) {
+	   			document.getElementById('username-exists').innerHTML = available;
+	   			document.getElementById('username-exists').style.color = "green";
+   		}
+   		else {
+   			document.getElementById('username-exists').innerHTML = unavailable;
+   			document.getElementById('username-exists').style.color = "red";
+   		}
+
+	}
+	function usernameExists(input) {
+
+		var username = input.value;
+		if (username != "") {
+
+			var csrftoken = Cookies.get('csrftoken');
+			postData = {"username": username};
+
+			var xmlhttp = new XMLHttpRequest();
+	   		xmlhttp.open("POST", "username-availability", true);
+	   		xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
+	   		xmlhttp.send(postData);
+
+	   		xmlhttp.onreadystatechange = function() {
+			    if (this.readyState == 4 && this.status == 200) {
+			        var jsonObj = JSON.parse(this.responseText);
+			        updateField(jsonObj);
+			    }
+			};
+   		}
+
+   		else {
+   			document.getElementById('username-exists').innerHTML = "";
+   		}
 	}
 
 	function loadForm(formID) {
@@ -32,7 +66,7 @@
       <input type="text" name="first_name" placeholder="First Name" required/>
       <input type="text" name="last_name" placeholder="Last Name" required/>
      <div> <input type="text" name="username" placeholder="Username" required on 
-      		onkeyup="usernameExists()"/><div class="username-exists-box" id="username-exists"></div></div>
+      		onkeyup="usernameExists(this)"/><div class="username-exists-box" id="username-exists"></div></div>
       <input type="email" name="email" placeholder="Email" required/>
 
 
