@@ -2,8 +2,17 @@
 
 {% block content %}
 <script>
+	
+
+	function usernameExists() {
+
+		var invalid = '&#10007;'; // x
+		var valid = '&#10003;'; // checkmark
+		document.getElementById('username-exists').innerHTML = valid;
+	}
+
 	function loadForm(formID) {
-		
+
 		if (formID == "signup") {
 			document.getElementById("signup").style.display = "block"
 			document.getElementById("login").style.display = "none"
@@ -22,7 +31,8 @@
  		{% csrf_token %}
       <input type="text" name="first_name" placeholder="First Name" required/>
       <input type="text" name="last_name" placeholder="Last Name" required/>
-      <input type="text" name="username" placeholder="Username" required/> <!--check if username already exists-->
+     <div> <input type="text" name="username" placeholder="Username" required on 
+      		onkeyup="usernameExists()"/><div class="username-exists-box" id="username-exists"></div></div>
       <input type="email" name="email" placeholder="Email" required/>
 
 
