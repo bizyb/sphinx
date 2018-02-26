@@ -40,17 +40,6 @@ class InviteCode(models.Model):
 
 
 
-class Team(models.Model):
-
-	name = models.CharField(max_length=32, blank=False, null=True)
-
-	def __unicode__(self):
-
-		# Model object name to show in the admin dashboard or in shell queries
-		return '%s' % (self.name)
-
-
-
 class SiteUser(models.Model):
 	'''
 	Store user profile. Extend Django's default fields such as username, password, email,
@@ -65,7 +54,6 @@ class SiteUser(models.Model):
 	user 				= models.OneToOneField(User, on_delete=models.CASCADE)
 	invite_code_input 	= models.CharField(max_length=32, blank=False, null=False)
 	invite_code 		= models.ForeignKey(InviteCode, related_name="siteuser_invitecode")
-	team 				= models.ForeignKey(Team, related_name="siteuser_team", blank=True, null=True)
 
 
 	# def validate_code(self):

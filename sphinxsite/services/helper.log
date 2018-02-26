@@ -1,0 +1,13 @@
+2018-02-26 01:59:08,755 ERROR: ValueError: Cannot assign "u'ajfkajfkadf%adajk'": "SiteUser.invite_code" must be a "InviteCode" instance.
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 30, in process_form_data
+    sphinx_models.SiteUser.objects.create(**record)
+  File "/Users/bm/usc/perfit_docenv/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/bm/usc/perfit_docenv/lib/python2.7/site-packages/django/db/models/query.py", line 397, in create
+    obj = self.model(**kwargs)
+  File "/Users/bm/usc/perfit_docenv/lib/python2.7/site-packages/django/db/models/base.py", line 537, in __init__
+    setattr(self, field.name, rel_obj)
+  File "/Users/bm/usc/perfit_docenv/lib/python2.7/site-packages/django/db/models/fields/related_descriptors.py", line 211, in __set__
+    self.field.remote_field.model._meta.object_name,
+ValueError: Cannot assign "u'ajfkajfkadf%adajk'": "SiteUser.invite_code" must be a "InviteCode" instance.
