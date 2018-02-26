@@ -55,7 +55,7 @@
 #signup {
   display: none;
 }
-.username-exists-box, .password-match-box{
+.username-exists-box, .password-match-box, .invite-validation-box{
 	margin-right: -310px;
 	margin-right: -310px;
 	margin-top: -50px;

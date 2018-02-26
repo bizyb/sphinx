@@ -52,7 +52,7 @@ def validate_invite(request):
     Note: This function is used in an AJAX call before form submission.
 
     '''
-    pass
+    # pass
     # If validation fails, let the client know that it failed possibly because:
     #     1. The invitation code entered is invalid
     #     2. The invitation code may have been redeemed already
@@ -66,6 +66,12 @@ def validate_invite(request):
     #     1. set status to SUCCESS
     #     2. the client should put a green checkmark next to the input box and let the 
     #         signup proceed
+
+    username = request.POST.get('invite_code')
+    # exists = sphinx_models.SiteUser.objects.filter(user__username=username).exists()
+    # response = {'available': not exists}
+    response = {'status': 'SUCCESS'}
+    return JsonResponse(response)
 
 
 
@@ -90,7 +96,8 @@ def username_availability(request):
   
     username = request.POST.get('username')
     exists = sphinx_models.SiteUser.objects.filter(user__username=username).exists()
-    response = {'available': not exists}
+    status = 'SUCCESS' if not exists else 'FAIL'
+    response = {'status': status}
     return JsonResponse(response)
 
     

@@ -33,6 +33,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.apidocs, name='apidocs'),
     url(r'^username-availability$', views.username_availability, name='username-availability'),
+    url(r'^invite-code-validation$', views.validate_invite, name='invite-code-validation'),
     # url(r'^$', views.signup, name='signup'),
 
     

@@ -5,8 +5,9 @@
 	
 	var failIcon = '&#10007;'; // x
 	var passIcon = '&#10003;'; // checkmark
-	function successIcon(elemID, icon, status) {
 
+	function successIcon(elemID, icon, status) {
+		
 		if (status == "success") document.getElementById(elemID).style.color = "green";
 	
 		else  if (status == "fail") document.getElementById(elemID).style.color = "red";
@@ -14,44 +15,42 @@
 		document.getElementById(elemID).innerHTML = icon;
 	}
 
-	// function updateField(jsonObj) {
+	function ajaxValidation(valueType, value, elemID) {
 
-	   	
-	// 	if (jsonObj.available) {
-	//    			document.getElementById('username-exists').innerHTML = success;
-	//    			document.getElementById('username-exists').style.color = "green";
- //   		}
- //   		else {
- //   			document.getElementById('username-exists').innerHTML = fail;
- //   			document.getElementById('username-exists').style.color = "red";
- //   		}
-
-	// }
-	function usernameExists(input) {
-
-		var username = input.value;
-		if (username != "") {
-
+		if (value != "") {
+			var url;
 			var csrftoken = Cookies.get('csrftoken');
-			postData = {"username": username};
+			postData = {valueType: value};
+
+			if (valueType == "username") url = "username-availability";
+			else if (valueType == "invite_code") url = "invite-code-validation";
+
 
 			var xmlhttp = new XMLHttpRequest();
-	   		xmlhttp.open("POST", "username-availability", true);
+	   		xmlhttp.open("POST", url, true);
 	   		xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
 	   		xmlhttp.send(postData);
 
 	   		xmlhttp.onreadystatechange = function() {
 			    if (this.readyState == 4 && this.status == 200) {
 			        var jsonObj = JSON.parse(this.responseText);
-			        if (jsonObj.available) successIcon("'username-exists'", passIcon, "success");
-			        else successIcon("'username-exists'", failIcon, "fail");
+			        if (jsonObj.status == 'SUCCESS') successIcon(elemID, passIcon, "success");
+			        else successIcon(elemID, failIcon, "fail");
 			    }
 			};
    		}
 
-   		else {
-   			successIcon("'username-exists'", "", "reset");
-   		}
+   		else successIcon(elemID, "", "reset");
+	}
+
+	function usernameExists(input) {
+
+		ajaxValidation("username", input.value, "username-exists");
+	}
+
+	function validateInvite(input) {
+
+		ajaxValidation("invite_code", input.value, "invite-is-valid");
 	}
 
 	function loadForm(formID) {
@@ -89,12 +88,22 @@
 		else successIcon('password-match', "", "reset");
 	}
 
+	// function disableButton() {
 
+	// 	document.getElementById('signup-button').style.display = "none";
+
+	// }
+
+	// function formSubmit() {
+
+	// 	console.log()
+
+	// }
 </script>
 <div class="login-page">
   <div class="form">
   	<div id="signup">
-    <form class="register-form" action="" method="post">
+    <form class="register-form" action="" method="post" onload="disableButton()">
  		{% csrf_token %}
       <input type="text" name="first_name" placeholder="First Name" required/>
       <input type="text" name="last_name" placeholder="Last Name" required/>
@@ -120,9 +129,10 @@
           <option value="ml">ML</option>
        </select>
    </div>
-       <input type="text" name="invite_code" placeholder="Invite code" required/>
+       <div><input type="text" name="invite_code" placeholder="Invite code" required onkeyup="validateInvite()"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
 
-      <button>create</button>
+      <button id="signup-button" onclick="formSubmit()">Register</button>
+
       <p class="message" onclick="loadForm('login')">Already registered? <a href="#">Sign In</a></p>
     </form>
 </div>
@@ -138,6 +148,4 @@
 </div>
   </div>
 </div>
-
-
 {% endblock %}
