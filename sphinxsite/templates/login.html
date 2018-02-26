@@ -67,13 +67,25 @@
 
 	}
 
+	function patternMatch(string) {
+
+		var pattern = /^(\w+){8,}$/; //at least eight characters and alphanumeric
+		matchArr =  string.match(pattern);
+		if (matchArr != null && matchArr.length > 0) return true;
+		return false;
+
+	}
+
 	function passwordMatch() {
 	
 		var password1 = document.getElementById('password1').value;
 		var password2 = document.getElementById('password2').value;
 
-		if (password1 != "" && password1 == password2) successIcon('password-match', passIcon, "success");
-		else if (password2 != "" && password1 != password2) successIcon('password-match', failIcon, "fail");
+		if (password1 != "" && password1 == password2 && patternMatch(password1)) {
+			successIcon('password-match', passIcon, "success"); }
+
+		else if ((password2 != "" && password1 != password2) || 
+			(password2 != "" && !patternMatch(password1))) successIcon('password-match', failIcon, "fail");
 		else successIcon('password-match', "", "reset");
 	}
 
@@ -91,8 +103,10 @@
       <input type="email" name="email" placeholder="Email" required/>
 
 
-      <input type="password" placeholder="Create a password" name="password1" required
-      	id="password1" onkeyup="passwordMatch()"/>
+      <div class="message" id="password-requirements">
+      	Password must be at least 8 characters long and may contain numbers, letters, and underscores
+      	<input type="password" placeholder="Create a password" name="password1" required
+      	id="password1" onkeyup="passwordMatch()"/></div>
       <div><input type="password" placeholder="Confirm your password" name="password2" required id="password2" onkeyup="passwordMatch()"/>
       <div class="password-match-box" id="password-match"></div></div>
 

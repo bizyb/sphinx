@@ -65,6 +65,9 @@
 	color: green;
 	height: 20px;
 }
+#password-requirements {
+	text-align: left;
+}
 .team-dropdown {
 	text-align: left;
 	padding-bottom: 15px;
