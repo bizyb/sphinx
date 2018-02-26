@@ -3,22 +3,30 @@
 {% block content %}
 <script type="text/javascript">
 	
+	var failIcon = '&#10007;'; // x
+	var passIcon = '&#10003;'; // checkmark
+	function successIcon(elemID, icon, status) {
 
-	function updateField(jsonObj) {
+		if (status == "success") document.getElementById(elemID).style.color = "green";
+	
+		else  if (status == "fail") document.getElementById(elemID).style.color = "red";
 
-	   	var unavailable = '&#10007;'; // x
-		var available = '&#10003;'; // checkmark
-
-		if (jsonObj.available) {
-	   			document.getElementById('username-exists').innerHTML = available;
-	   			document.getElementById('username-exists').style.color = "green";
-   		}
-   		else {
-   			document.getElementById('username-exists').innerHTML = unavailable;
-   			document.getElementById('username-exists').style.color = "red";
-   		}
-
+		document.getElementById(elemID).innerHTML = icon;
 	}
+
+	// function updateField(jsonObj) {
+
+	   	
+	// 	if (jsonObj.available) {
+	//    			document.getElementById('username-exists').innerHTML = success;
+	//    			document.getElementById('username-exists').style.color = "green";
+ //   		}
+ //   		else {
+ //   			document.getElementById('username-exists').innerHTML = fail;
+ //   			document.getElementById('username-exists').style.color = "red";
+ //   		}
+
+	// }
 	function usernameExists(input) {
 
 		var username = input.value;
@@ -35,13 +43,14 @@
 	   		xmlhttp.onreadystatechange = function() {
 			    if (this.readyState == 4 && this.status == 200) {
 			        var jsonObj = JSON.parse(this.responseText);
-			        updateField(jsonObj);
+			        if (jsonObj.available) successIcon("'username-exists'", passIcon, "success");
+			        else successIcon("'username-exists'", failIcon, "fail");
 			    }
 			};
    		}
 
    		else {
-   			document.getElementById('username-exists').innerHTML = "";
+   			successIcon("'username-exists'", "", "reset");
    		}
 	}
 
@@ -57,6 +66,18 @@
 		}
 
 	}
+
+	function passwordMatch() {
+	
+		var password1 = document.getElementById('password1').value;
+		var password2 = document.getElementById('password2').value;
+
+		if (password1 != "" && password1 == password2) successIcon('password-match', passIcon, "success");
+		else if (password2 != "" && password1 != password2) successIcon('password-match', failIcon, "fail");
+		else successIcon('password-match', "", "reset");
+	}
+
+
 </script>
 <div class="login-page">
   <div class="form">
@@ -70,8 +91,11 @@
       <input type="email" name="email" placeholder="Email" required/>
 
 
-      <input type="password" placeholder="Create a password" name="password1" required/>
-      <input type="password" placeholder="Confirm your password" name="password2" required/> <!--check if passwords match-->
+      <input type="password" placeholder="Create a password" name="password1" required
+      	id="password1" onkeyup="passwordMatch()"/>
+      <div><input type="password" placeholder="Confirm your password" name="password2" required id="password2" onkeyup="passwordMatch()"/>
+      <div class="password-match-box" id="password-match"></div></div>
+
       <div class="team-dropdown">Team
       <select name="team_name" id="team">
       	<option value="3d">3D</option>

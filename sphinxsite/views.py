@@ -90,7 +90,7 @@ def username_availability(request):
   
     username = request.POST.get('username')
     exists = sphinx_models.SiteUser.objects.filter(user__username=username).exists()
-    response = {'available': exists}
+    response = {'available': not exists}
     return JsonResponse(response)
 
     
