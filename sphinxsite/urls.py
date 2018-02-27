@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^$', views.apidocs, name='apidocs'),
     url(r'^username-availability$', views.username_availability, name='username-availability'),
     url(r'^invite-code-validation$', views.validate_invite, name='invite-code-validation'),
-    # url(r'^$', views.signup, name='signup'),
+    url(r'^registration$', views.registration, name='registration'),
 
     
     # url(r'^data-interpretation/$', cache_page(CACHE_LENGTH)(views.data_interpretation), name='interpretation'),

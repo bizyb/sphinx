@@ -67,20 +67,20 @@ def validate_invite(request):
     #     2. the client should put a green checkmark next to the input box and let the 
     #         signup proceed
 
-    username = request.POST.get('invite_code')
+    invite_code = request.POST.get('invite_code')
     # exists = sphinx_models.SiteUser.objects.filter(user__username=username).exists()
     # response = {'available': not exists}
-    response = {'status': 'FAIL'}
+    response = {'status': 'SUCCESS'}
     return JsonResponse(response)
 
 
 
-def signup(request):
+def registration(request):
 	
     context = helper.process_form_data(request)
     if context.get('status') == 'SUCCESS':
-        username = context.get('form_data').get('username')
-        raw_password = context.get('form_data').get('password')
+        username = context.get('username')
+        raw_password = context.get('password')
         user = authenticate(username=username, password=raw_password)
         login(request, user)
         return redirect('apidocs')
@@ -90,7 +90,7 @@ def signup(request):
         # pass
         # handle validation failure here
 
-    return render(request, 'signup.html', {'form': context.get('form')})
+    return render(request, 'signup.html', {})
 
 def username_availability(request):
   

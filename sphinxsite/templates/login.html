@@ -19,19 +19,19 @@
 	}
 
 	function ajaxValidation(valueType, value, elemID) {
-		var validated = false;
+
 		if (value != "") {
 			var url;
 			var csrftoken = Cookies.get('csrftoken');
-			postData = {valueType: value};
+			postData = valueType + "=" + value;
 
 			if (valueType == "username") url = "username-availability";
 			else if (valueType == "invite_code") url = "invite-code-validation";
 
-
 			var xmlhttp = new XMLHttpRequest();
 	   		xmlhttp.open("POST", url, true);
 	   		xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
+	   		xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	   		xmlhttp.send(postData);
 
 	   		xmlhttp.onreadystatechange = function() {
@@ -39,33 +39,65 @@
 			        var jsonObj = JSON.parse(this.responseText);
 			        if (jsonObj.status == 'SUCCESS') {
 			        	successIcon(elemID, passIcon, "success");
-			        	validated = true;
+
+			        	if (valueType == "username") usernameValidated = true;
+			        	else if (valueType == "invite_code") {
+			        		inviteError(false);
+			        		inviteValidated = true;
+			        	}
 			        }
 			        else {
 			        	successIcon(elemID, failIcon, "fail");
-			        	validated = false;
-			        }
+			        	if (valueType == "username") usernameValidated = false;
+			        	else if (valueType == "invite_code") inviteValidated = false;
+			        }	
 			    }
 			};
    		}
+   		else successIcon(elemID, "", "reset");
 
-   		else {
-   			successIcon(elemID, "", "reset");
-   			validated = false;
-   		}
-   		return validated;
 	}
 
 	function usernameExists(input) {
 
 		ajaxValidation("username", input.value, "username-exists");
 	}
+	function inviteError(error) {
+		inviteValidated = false;
+
+		if (!error) {
+			document.getElementById("presubmission-message").innerHTML = "";
+			inviteValidated = true;
+		}		
+		else {
+			var html = "Sorry, the invitation code you've provided is invalid.";
+			html 	+= " Possible reasons for failure:";
+			html 	+= "<ul>";
+			html 	+= "<li>The invitation code may have been redeemed already</li>";
+			html 	+= "<li>The invitation code belongs to someone else</li>";
+			html 	+= "</ul>";
+			html 	+= "Make sure you have entered the invitation code, first name,";
+			html 	+= " last name, and email address exactly as shown in the";
+			html 	+= " invitation email. If the problem continues, please contact support.";
+			document.getElementById("presubmission-message").innerHTML = html;
+		}
+
+	}
 
 	function validateInvite(input) {
 
-		var success = ajaxValidation("invite_code", input.value, "invite-is-valid");
-		console.log(success);
+		inviteValidated = false;
+		if (input.value == "") {
+			document.getElementById("presubmission-message").innerHTML = "";
+		}
+		else if (input.value.length > 0 && input.value.length != 32) {
+			successIcon("invite-is-valid", failIcon, "fail");
+			inviteError(true);
+		}
+		else if (input.value.length == 32 ) {
+			ajaxValidation("invite_code", input.value, "invite-is-valid");
 	}
+}
 
 	function loadForm(formID) {
 
@@ -86,53 +118,82 @@
 		matchArr =  string.match(pattern);
 		if (matchArr != null && matchArr.length > 0) return true;
 		return false;
-
 	}
 
 	function passwordMatch() {
 	
 		var password1 = document.getElementById('password1').value;
 		var password2 = document.getElementById('password2').value;
+		passwordValidated = false;
 
 		if (password1 != "" && password1 == password2 && patternMatch(password1)) {
-			successIcon('password-match', passIcon, "success"); }
-
+			successIcon('password-match', passIcon, "success"); 
+			passwordValidated = true;
+		}
 		else if ((password2 != "" && password1 != password2) || 
-			(password2 != "" && !patternMatch(password1))) successIcon('password-match', failIcon, "fail");
-		else successIcon('password-match', "", "reset");
+			(password2 != "" && !patternMatch(password1))) {
+				successIcon('password-match', failIcon, "fail");
+			}
+		else {
+			successIcon('password-match', "", "reset");
+		}
 	}
+	
+	function getPostData(formObj) {
 
-	// function disableButton() {
 
-	// 	document.getElementById('signup-button').style.display = "none";
+		var fName 	= formObj.first_name.value;
+		var lName 	= formObj.last_name.value;
+		var uName 	= formObj.username.value;
+		var email 	= formObj.email.value;
+		var password = formObj.password1.value;
+		var team =	formObj.team.value;
+		var invite = formObj.invite_code.value;
 
-	// }
+		var querystring = 'first_name=' + fName + '&last_name=' + lName + '&username=';
+		querystring += uName + '&email=' + email + '&password1=' + password;
+		querystring += '&team=' + team + '&invite_code=' + invite;
 
-	// function formSubmit() {
+		return querystring;
 
-	// 	if (passwordValidated && inviteValidated && usernameValidated) {
-	// 		// submit form
-	// 	}
+	}
+	
+	function formSubmit(formObj) {
+		
+		// if (passwordValidated && inviteValidated && usernameValidated) {
+	
+			var querystring = getPostData(formObj);
+			var csrftoken = Cookies.get('csrftoken');
+			var url = "registration";
+			var xmlhttp = new XMLHttpRequest();
+	   		xmlhttp.open("POST", url, true);
+	   		xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
+	   		xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	   		xmlhttp.send(querystring);
+	   		console.log("just sent POST to registration");
+	   		console.log("querystring: " + querystring);
 
-	// }
+		// }
+	}
+	
 </script>
 <div class="login-page">
   <div class="form">
   	<div id="signup">
-    <form class="register-form" action="" method="post">
+    <form class="register-form" method="post" onsubmit="formSubmit(this)">
  		{% csrf_token %}
-      <input type="text" name="first_name" placeholder="First Name" required/>
-      <input type="text" name="last_name" placeholder="Last Name" required/>
-     <div> <input type="text" name="username" placeholder="Username" required on 
+      <input type="text" name="first_name" id="first-name" placeholder="First Name" />
+      <input type="text" name="last_name" id="last-name" placeholder="Last Name" />
+     <div> <input type="text" name="username" id="username" placeholder="Username"  on 
       		onkeyup="usernameExists(this)"/><div class="username-exists-box" id="username-exists"></div></div>
-      <input type="email" name="email" placeholder="Email" required/>
+      <input type="email" name="email" placeholder="Email"/>
 
 
       <div class="message" id="password-requirements">
-      	Password must be at least 8 characters long and may contain numbers, letters, and underscores
-      	<input type="password" placeholder="Create a password" name="password1" required
+      	Password must be at least 8 characters long and may contain numbers, letters, and underscores<br>
+      	<input type="password" placeholder="Create a password" name="password1" 
       	id="password1" onkeyup="passwordMatch()"/></div>
-      <div><input type="password" placeholder="Confirm your password" name="password2" required id="password2" onkeyup="passwordMatch()"/>
+      <div><input type="password" placeholder="Confirm your password" name="password2"  id="password2" onkeyup="passwordMatch()"/>
       <div class="password-match-box" id="password-match"></div></div>
 
       <div class="team-dropdown">Team
@@ -145,9 +206,10 @@
           <option value="ml">ML</option>
        </select>
    </div>
-       <div><input type="text" name="invite_code" placeholder="Invite code" required onkeyup="validateInvite(this)"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
-
-      <button id="signup-button" onclick="formSubmit()">Register</button>
+       <div><input type="text" id="invite-code" name="invite_code" placeholder="Invite code"  onkeyup="validateInvite(this)"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
+      <div class="button"><input id="signup-button" type="submit" value="Register"></div>
+      <div class="message" id="presubmission-message">
+      </div>
 
       <p class="message" onclick="loadForm('login')">Already registered? <a href="#">Sign In</a></p>
     </form>

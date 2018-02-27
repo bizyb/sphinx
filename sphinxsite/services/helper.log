@@ -11,3 +11,15 @@ Traceback (most recent call last):
   File "/Users/bm/usc/perfit_docenv/lib/python2.7/site-packages/django/db/models/fields/related_descriptors.py", line 211, in __set__
     self.field.remote_field.model._meta.object_name,
 ValueError: Cannot assign "u'ajfkajfkadf%adajk'": "SiteUser.invite_code" must be a "InviteCode" instance.
+2018-02-27 01:07:52,325 ERROR: NameError: global name 'POST' is not defined
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 20, in process_form_data
+    print POST.get('first_name')
+NameError: global name 'POST' is not defined
+2018-02-27 01:16:07,244 ERROR: NameError: global name 'entry' is not defined
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 28, in process_form_data
+    context['form_data'] = entry
+NameError: global name 'entry' is not defined
+2018-02-27 01:16:49,058 INFO: New signup form: {'username': None, 'first_name': None, 'last_name': None, 'invite_code': None, 'team': None, 'password': None, 'email': None}
+2018-02-27 02:17:28,589 INFO: New signup form: {'username': u'', 'first_name': u'Sideshow', 'last_name': u'Bobby', 'invite_code': u'', 'team': u'3d', 'password': u'', 'email': u''}
