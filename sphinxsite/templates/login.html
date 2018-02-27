@@ -163,7 +163,7 @@
 
 		// Submit form synchronously and wait for submission status
 		
-		// if (passwordValidated && inviteValidated && usernameValidated) {
+		if (passwordValidated && inviteValidated && usernameValidated) {
 	
 			var querystring = getPostData(formObj);
 			var csrftoken = Cookies.get('csrftoken');
@@ -175,9 +175,8 @@
 
 	   		jsonObj = JSON.parse(xmlhttp.responseText);
 	   		if (jsonObj.status == 'SUCCESS') thankyouPage();
-	   		// else {
-	   		// 	handle the case where form submission fails
-	   		// }
+	   		else registrationFail();
+	   	}
 
 	}
 
@@ -188,6 +187,13 @@
 		html += " to login with your new credentials.</div>"
 		document.getElementById("registration-form").innerHTML = html;
 	}
+
+	function registrationFail() {
+
+		var msg = "Sorry, we were unable to create an account for you. Please";
+		msg += " verify your information and try again. If the problem continues, contact support.";
+		alert(msg); 
+	}
 	
 </script>
 <div class="login-page">
@@ -195,18 +201,19 @@
   	<div id="signup">
     <form class="register-form" method="post" action="" onsubmit="formSubmit(this)">
  		{% csrf_token %}
-      <input type="text" name="first_name" id="first-name" placeholder="First Name" />
-      <input type="text" name="last_name" id="last-name" placeholder="Last Name" />
-     <div> <input type="text" name="username" id="username" placeholder="Username"  on 
+ 		<div class="message" id="registration-fail-msg"></div>
+      <input type="text" name="first_name" id="first-name" placeholder="First Name" required/>
+      <input type="text" name="last_name" id="last-name" placeholder="Last Name" required/>
+     <div> <input type="text" name="username" id="username" placeholder="Username"  required 
       		onkeyup="usernameExists(this)"/><div class="username-exists-box" id="username-exists"></div></div>
-      <input type="email" name="email" placeholder="Email"/>
+      <input type="email" name="email" placeholder="Email" required/>
 
 
       <div class="message" id="password-requirements">
       	Password must be at least 8 characters long and may contain numbers, letters, and underscores<br>
       	<input type="password" placeholder="Create a password" name="password1" 
-      	id="password1" onkeyup="passwordMatch()"/></div>
-      <div><input type="password" placeholder="Confirm your password" name="password2"  id="password2" onkeyup="passwordMatch()"/>
+      	id="password1" onkeyup="passwordMatch()" required/></div>
+      <div><input type="password" placeholder="Confirm your password" name="password2"  required id="password2" onkeyup="passwordMatch()"/>
       <div class="password-match-box" id="password-match"></div></div>
 
       <div class="team-dropdown">Team
@@ -219,7 +226,7 @@
           <option value="ml">ML</option>
        </select>
    </div>
-       <div><input type="text" id="invite-code" name="invite_code" placeholder="Invite code"  onkeyup="validateInvite(this)"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
+       <div><input type="text" id="invite-code" name="invite_code" placeholder="Invite code" required onkeyup="validateInvite(this)"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
       <div class="button"><button id="signup-button">Register</div>
       <div class="message" id="presubmission-message">
       </div>
