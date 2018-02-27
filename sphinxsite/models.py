@@ -2,13 +2,10 @@ from __future__ import unicode_literals
 # from django.contrib import admin
 from django.db import models
 from django.contrib.auth.models import User
+from uuid import uuid4
 
 # from django.core.urlresolvers import reverse
-# from time import time
-# import datetime
-# from mptt.models import MPTTModel, TreeForeignKey 
-# from django.contrib.postgres.fields import JSONField
-# import services.common_helper as common_helper
+
 # import services.signals as signals
 
 
@@ -18,11 +15,12 @@ class InviteCode(models.Model):
 	to the person the invite code was created for so they can sign up. 
 
 	'''
-	code 		= models.CharField(max_length=32)
+	code 		= models.CharField(max_length=64)
 	first_name 	= models.CharField(max_length=256, blank=False, null=False)
 	last_name 	= models.CharField(max_length=256, blank=False, null=False)
 	email		= models.EmailField(blank=False, null=False)
-	used 		= models.BooleanField(default=False)
+	in_use 		= models.BooleanField(default=False)
+	send_email	= models.BooleanField(default=False)
 
 	
 	def __unicode__(self):
@@ -33,7 +31,7 @@ class InviteCode(models.Model):
 	def save(self, *args, **kwargs):
 
 		if not self.code:
-			self.code = helper.get_random_code()
+			self.code = str(uuid4())
 
 		super(InviteCode, self).save(*args, **kwargs)
 
@@ -52,46 +50,32 @@ class SiteUser(models.Model):
 	'''
 
 	user 				= models.OneToOneField(User, on_delete=models.CASCADE)
-	invite_code_input 	= models.CharField(max_length=32, blank=False, null=False)
+	invite_code_input 	= models.CharField(max_length=64, blank=False, null=False)
 	invite_code 		= models.ForeignKey(InviteCode, related_name="siteuser_invitecode")
+	team 				= models.CharField(max_length=64, blank=True, null=False)
 
 
-	# def validate_code(self):
+	def first_name(self):
+		return self.user.first_name
 
-	# 	code_obj_qset = InviteCode.objects.filter(code=self.invite_code_input)
-	# 	if code_obj_qset.exists():
+	def last_name(self):
+		return self.user.last_name
 
-	# 		code_obj = code_obj_set[0] # we expect a single match so it's usually just the first object
+	def email(self):
+		return self.user.email
 
-	# 		if code_obj.used:
-	# 			raise InviteCodeInUse
-	# 		valid = code_obj.email == self.user.email && code_obj.first_name == self.user.first_name && 
-	# 									code_obj.last_name == self.user.last_name
-	# 		if not valid:
-	# 			raise ValidationFail
-	# 	else:
-	# 		raise CodeNotFound
-
-	# 	return True
+	def invite(self):
+		return self.invite_code_input
 
 
+	# def save(self, *args, **kwargs):
 
-	def save(self, *args, **kwargs):
+	# 	print '--------in save------------'
+	# 	self.invite_code = InviteCode.objects.filter(code=self.invite_code_input)[0]
+	# 	print 'self.invite_code: ', self.invite_code
+	# 	print '-----------------'
+	# 	self.invite_code.in_use = True
+	# 	self.invite_code.save()
 
-		# try:
-		# 	self.validate_code()
-		# except InviteCodeInUse as e:
-		# 	pass
-		# except ValidationFail as e:
-		# 	pass
-		# except CodeNotFound as e:
-		# 	pass
-		# except Exception as e:
-		# 	pass
-
-		self.invite_code = InviteCode.objects.filter(code=invite_code_input)[0]
-		self.invite_code.used = True
-		self.invite_code.save()
-
-		super(SiteUser, self).save(*args, **kwargs)
+	# 	super(SiteUser, self).save(*args, **kwargs)
 

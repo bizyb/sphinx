@@ -5,7 +5,6 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.core import serializers
 from django.shortcuts import render, redirect
 from sphinxsite.services import helper, decorators
-from sphinxsite import models as sphinx_models
 
 from sphinxsite.services import loggers
 logger = loggers.Loggers(__name__).get_logger()
@@ -33,6 +32,7 @@ logger = loggers.Loggers(__name__).get_logger()
 #     7. Logout page:
 #         -same style as login/signup
 #         -say 'you've been logged out, etc. and show a link to go to the login page 
+
 
 def apidocs(request):
     
@@ -62,14 +62,21 @@ def validate_invite(request):
 def registration(request):
 
     context = helper.process_form_data(request)
-    # if context.get('status') == 'SUCCESS':
-        # username = context.get('username')
-        # raw_password = context.get('password')
-        # user = authenticate(username=username, password=raw_password)
-        # login(request, user)
+    if context.get('status') == 'SUCCESS':
+        # save the form to the db
+        helper.create_new_user(context.get('form_data'))
+        username = context.get('form_data').get('username')
+        raw_password = context.get('form_data').get('password')
+        user = authenticate(username=username, password=raw_password)
+        login(request, user)
         # return redirect('apidocs')
    
     return JsonResponse({'status': context.get('status')})
+
+
+def login(request):
+    pass
+
 
 @decorators.POST_only
 @decorators.username

@@ -16,7 +16,7 @@ def invite(function):
 			'first_name': request.POST.get('first_name'),
 			'last_name': request.POST.get('last_name'),
 			'email': request.POST.get('email'),
-			'used': False
+			'in_use': False
 		}
 		exists = sphinx_models.InviteCode.objects.filter(**params).exists()
 		if exists:

@@ -18,7 +18,8 @@
 		document.getElementById(elemID).innerHTML = icon;
 	}
 
-	function ajaxValidation(valueType, value, elemID) {
+	
+	function ajaxValidation(valueType, value, elemID, formObj) {
 
 		if (value != "") {
 			var url;
@@ -26,7 +27,10 @@
 			postData = valueType + "=" + value;
 
 			if (valueType == "username") url = "username-availability";
-			else if (valueType == "invite_code") url = "invite-code-validation";
+			else if (valueType == "invite_code") {
+				url = "invite-code-validation";
+				postData = getPostData(formObj);
+			}
 
 			var xmlhttp = new XMLHttpRequest();
 	   		xmlhttp.open("POST", url, true);
@@ -60,7 +64,7 @@
 
 	function usernameExists(input) {
 
-		ajaxValidation("username", input.value, "username-exists");
+		ajaxValidation("username", input.value, "username-exists", null);
 	}
 	function inviteError(error) {
 		inviteValidated = false;
@@ -84,19 +88,19 @@
 
 	}
 
-	function validateInvite(input) {
+	function validateInvite(input, formObj) {
 
 		inviteValidated = false;
 		if (input.value == "") {
 			document.getElementById("presubmission-message").innerHTML = "";
 			successIcon('invite-is-valid', "", "reset");
 		}
-		else if (input.value.length > 0 && input.value.length != 32) {
+		else if (input.value.length > 0 && input.value.length != 36) {
 			successIcon("invite-is-valid", failIcon, "fail");
 			inviteError(true);
 		}
-		else if (input.value.length == 32 ) {
-			ajaxValidation("invite_code", input.value, "invite-is-valid");
+		else if (input.value.length == 36 ) {
+			ajaxValidation("invite_code", input.value, "invite-is-valid", formObj);
 	}
 }
 
@@ -227,7 +231,7 @@
           <option value="ml">ML</option>
        </select>
    </div>
-       <div><input type="text" id="invite-code" name="invite_code" placeholder="Invite code" required onkeyup="validateInvite(this)"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
+       <div><input type="text" id="invite-code" name="invite_code" placeholder="Invite code" required onkeyup="validateInvite(this, this.form)"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
       <div class="button"><button id="signup-button">Register</div>
       <div class="message" id="presubmission-message">
       </div>
