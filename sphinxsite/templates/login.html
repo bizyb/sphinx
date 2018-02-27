@@ -89,6 +89,7 @@
 		inviteValidated = false;
 		if (input.value == "") {
 			document.getElementById("presubmission-message").innerHTML = "";
+			successIcon('invite-is-valid', "", "reset");
 		}
 		else if (input.value.length > 0 && input.value.length != 32) {
 			successIcon("invite-is-valid", failIcon, "fail");

@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.http import HttpResponse, HttpResponseForbidden
 from django.core import serializers
 from django.shortcuts import render, redirect
-from sphinxsite.services import helper
+from sphinxsite.services import helper, decorators
 from sphinxsite import models as sphinx_models
 
 from sphinxsite.services import loggers
@@ -45,47 +45,21 @@ def apidocs(request):
     return render(request, 'login.html', {})
 
 
+@decorators.POST_only
+@decorators.invite
 def validate_invite(request):
     '''
     Validate the invite code against what's already in the database. 
     Note: This function is used in an AJAX call before form submission.
-
-    '''
-    # pass
-    # If validation fails, let the client know that it failed possibly because:
-    #     1. The invitation code entered is invalid
-    #     2. The invitation code may have been redeemed already
-    #     3. The invitation code belongs to someone else
-    #     4. Solution: Make sure you enter the validation code with first name, last name,
-    #         and email address that was indicated in the invitation email
-    #     5. The client should be a red x next to the validation code and disable the signup 
-    #         button; disply the error message in <li> beneath the input box
-
-    # if validation succeeds:
-    #     1. set status to SUCCESS
-    #     2. the client should put a green checkmark next to the input box and let the 
-    #         signup proceed
-
-    invite_code = request.POST.get('invite_code')
-    print ""
-    print "invite_code: ", invite_code
-    print ""
-    # exists = sphinx_models.SiteUser.objects.filter(user__username=username).exists()
-    # response = {'available': not exists}
-    response = {'status': 'SUCCESS'}
-    return JsonResponse(response)
-
-
-# @POST_only
-def registration(request):
-
-    print ""
-    print "pOST: ", request.POST
-    print ""
     
-    # if request.method == "GET":
-    #     # Prevent any direct GET request to this URL
-    #     return HttpResponseForbidden()
+    The original request object is a data structure with all the HTTP 
+    attributes. However, the request returned by the decorator is a dictionary.
+    '''
+    return JsonResponse(request)
+
+
+@decorators.POST_only
+def registration(request):
 
     context = helper.process_form_data(request)
     # if context.get('status') == 'SUCCESS':
@@ -94,21 +68,16 @@ def registration(request):
         # user = authenticate(username=username, password=raw_password)
         # login(request, user)
         # return redirect('apidocs')
-    # elif context['status'] == 'UKNOWN':
-        # validation is handled through an ajax call; if it fails, signup is never called,
-        # except to populate the initial form
-        # pass
-        # handle validation failure here
-    # response = {'status': 'OK'}
-    return JsonResponse({'status': 'SUCCESS'})
+   
+    return JsonResponse({'status': context.get('status')})
 
+@decorators.POST_only
+@decorators.username
 def username_availability(request):
-    
-    username = request.POST.get('username')
-    print username
-    exists = sphinx_models.SiteUser.objects.filter(user__username=username).exists()
-    status = 'SUCCESS' if not exists else 'FAIL'
-    response = {'status': status}
-    return JsonResponse(response)
+    '''
+    Note: The original request object is a data structure with all the HTTP 
+    attributes. However, the request returned by the decorator is a dictionary.
+    '''
+    return JsonResponse(request)
 
     
