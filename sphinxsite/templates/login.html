@@ -158,29 +158,42 @@
 
 	}
 	
+	
 	function formSubmit(formObj) {
+
+		// Submit form synchronously and wait for submission status
 		
 		// if (passwordValidated && inviteValidated && usernameValidated) {
 	
 			var querystring = getPostData(formObj);
 			var csrftoken = Cookies.get('csrftoken');
-			var url = "registration";
 			var xmlhttp = new XMLHttpRequest();
-	   		xmlhttp.open("POST", url, true);
+	   		xmlhttp.open("POST", "registration", false);
 	   		xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
 	   		xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	   		xmlhttp.send(querystring);
-	   		console.log("just sent POST to registration");
-	   		console.log("querystring: " + querystring);
 
-		// }
+	   		jsonObj = JSON.parse(xmlhttp.responseText);
+	   		if (jsonObj.status == 'SUCCESS') thankyouPage();
+	   		// else {
+	   		// 	handle the case where form submission fails
+	   		// }
+
+	}
+
+	function thankyouPage() {
+
+		var html = "<div class=\"message\" id=\"registration-thankyou\">";
+		html += "Thank you for registering. Please click <a href=\"\\\">HERE</a>";
+		html += " to login with your new credentials.</div>"
+		document.getElementById("registration-form").innerHTML = html;
 	}
 	
 </script>
 <div class="login-page">
-  <div class="form">
+  <div class="form" id="registration-form">
   	<div id="signup">
-    <form class="register-form" method="post" onsubmit="formSubmit(this)">
+    <form class="register-form" method="post" action="" onsubmit="formSubmit(this)">
  		{% csrf_token %}
       <input type="text" name="first_name" id="first-name" placeholder="First Name" />
       <input type="text" name="last_name" id="last-name" placeholder="Last Name" />
@@ -207,7 +220,7 @@
        </select>
    </div>
        <div><input type="text" id="invite-code" name="invite_code" placeholder="Invite code"  onkeyup="validateInvite(this)"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
-      <div class="button"><input id="signup-button" type="submit" value="Register"></div>
+      <div class="button"><button id="signup-button">Register</div>
       <div class="message" id="presubmission-message">
       </div>
 

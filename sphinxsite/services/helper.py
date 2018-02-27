@@ -1,5 +1,4 @@
 from sphinxsite import models as sphinx_models
-# from sphinxsite.forms import SignUpForm
 from sphinxsite.services import loggers
 logger = loggers.Loggers(__name__).get_logger()
 
@@ -10,10 +9,7 @@ def process_form_data(request):
 	and save it to the database. Return a context dictionary to populate 
 	post-submission messages or perform redirects.
 	'''
-	context = {'status': 'UKNOWN'}
-	print ""
-	print 'POST: ', request.POST
-	print ""
+	context = {'status': 'FAIL'}
 	try:
 		record = {
 			'first_name': request.POST.get('first_name'),
@@ -29,7 +25,7 @@ def process_form_data(request):
 		context['status'] = 'SUCCESS'
 		context['password'] = record.get('password')
 		context['username'] = record.get('username')
-		
+
 		msg = "New signup form: {}".format(record)
 		logger.info(msg)
 

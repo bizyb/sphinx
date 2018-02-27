@@ -1,7 +1,7 @@
 import json
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.core import serializers
 from django.shortcuts import render, redirect
 from sphinxsite.services import helper
@@ -36,7 +36,6 @@ logger = loggers.Loggers(__name__).get_logger()
 
 def apidocs(request):
     
-
     # - make sure the user is logged in first
     # -if user logged in, let them see the apidocs landing page
     #     return a different template and context dict for the sphinx page
@@ -68,33 +67,45 @@ def validate_invite(request):
     #         signup proceed
 
     invite_code = request.POST.get('invite_code')
+    print ""
+    print "invite_code: ", invite_code
+    print ""
     # exists = sphinx_models.SiteUser.objects.filter(user__username=username).exists()
     # response = {'available': not exists}
     response = {'status': 'SUCCESS'}
     return JsonResponse(response)
 
 
-
+# @POST_only
 def registration(request):
-	
+
+    print ""
+    print "pOST: ", request.POST
+    print ""
+    
+    # if request.method == "GET":
+    #     # Prevent any direct GET request to this URL
+    #     return HttpResponseForbidden()
+
     context = helper.process_form_data(request)
-    if context.get('status') == 'SUCCESS':
-        username = context.get('username')
-        raw_password = context.get('password')
-        user = authenticate(username=username, password=raw_password)
-        login(request, user)
-        return redirect('apidocs')
+    # if context.get('status') == 'SUCCESS':
+        # username = context.get('username')
+        # raw_password = context.get('password')
+        # user = authenticate(username=username, password=raw_password)
+        # login(request, user)
+        # return redirect('apidocs')
     # elif context['status'] == 'UKNOWN':
         # validation is handled through an ajax call; if it fails, signup is never called,
         # except to populate the initial form
         # pass
         # handle validation failure here
-
-    return render(request, 'signup.html', {})
+    # response = {'status': 'OK'}
+    return JsonResponse({'status': 'SUCCESS'})
 
 def username_availability(request):
-  
+    
     username = request.POST.get('username')
+    print username
     exists = sphinx_models.SiteUser.objects.filter(user__username=username).exists()
     status = 'SUCCESS' if not exists else 'FAIL'
     response = {'status': status}

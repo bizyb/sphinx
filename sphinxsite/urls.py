@@ -15,20 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from . import views
-# from django.conf import settings
-# from django.conf.urls.static import static
-# from django.views.decorators.cache import cache_page
 
-# from django.contrib import admin
-# import contact.urls
-# import debug_toolbar
-# import os
-# SERVER_TYPE = os.environ.get('SERVER_TYPE')
-# CACHE_LENGTH = 86400 # 24-hour cache expiration
-
-# handle404 = 'views.page_not_found'
-
-# admin.autodiscover()
 
 urlpatterns = [
     url(r'^$', views.apidocs, name='apidocs'),
