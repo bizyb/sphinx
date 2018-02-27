@@ -66,16 +66,3 @@ class SiteUser(models.Model):
 
 	def invite(self):
 		return self.invite_code_input
-
-
-	# def save(self, *args, **kwargs):
-
-	# 	print '--------in save------------'
-	# 	self.invite_code = InviteCode.objects.filter(code=self.invite_code_input)[0]
-	# 	print 'self.invite_code: ', self.invite_code
-	# 	print '-----------------'
-	# 	self.invite_code.in_use = True
-	# 	self.invite_code.save()
-
-	# 	super(SiteUser, self).save(*args, **kwargs)
-

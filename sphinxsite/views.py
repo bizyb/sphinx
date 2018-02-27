@@ -1,8 +1,6 @@
-import json
 from django.http import JsonResponse
-from django.contrib.auth import login, authenticate
-from django.http import HttpResponse, HttpResponseForbidden
-from django.core import serializers
+# from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from sphinxsite.services import helper, decorators
 
@@ -34,15 +32,11 @@ logger = loggers.Loggers(__name__).get_logger()
 #         -say 'you've been logged out, etc. and show a link to go to the login page 
 
 
+
+@login_required
 def apidocs(request):
-    
-    # - make sure the user is logged in first
-    # -if user logged in, let them see the apidocs landing page
-    #     return a different template and context dict for the sphinx page
-    # -else: redirect to the homepage for login
-    #     return the login form 
-    # return render(request, 'the_sphinx_landing_page.html', {'f': form})
-    return render(request, 'login.html', {})
+   
+    return render(request, 'sphinx.html', {})
 
 
 @decorators.POST_only
@@ -63,19 +57,20 @@ def registration(request):
 
     context = helper.process_form_data(request)
     if context.get('status') == 'SUCCESS':
-        # save the form to the db
+        # create a new user
         helper.create_new_user(context.get('form_data'))
-        username = context.get('form_data').get('username')
-        raw_password = context.get('form_data').get('password')
-        user = authenticate(username=username, password=raw_password)
-        login(request, user)
-        # return redirect('apidocs')
-   
+        
     return JsonResponse({'status': context.get('status')})
 
 
 def login(request):
-    pass
+    
+    # re-direct if user already logged in 
+    if request.user.is_authenticated:
+        return redirect('apidocs')
+    else:
+        return render(request, 'login.html', {})
+
 
 
 @decorators.POST_only

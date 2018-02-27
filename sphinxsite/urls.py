@@ -18,10 +18,11 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^$', views.apidocs, name='apidocs'),
+    url(r'^$', views.login, name='login'),
     url(r'^username-availability$', views.username_availability, name='username-availability'),
     url(r'^invite-code-validation$', views.validate_invite, name='invite-code-validation'),
     url(r'^registration$', views.registration, name='registration'),
+    url(r'^apidocs$', views.apidocs, name='apidocs'),
 
     
     # url(r'^data-interpretation/$', cache_page(CACHE_LENGTH)(views.data_interpretation), name='interpretation'),
