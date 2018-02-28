@@ -8,6 +8,7 @@
 	var passwordValidated = false;
 	var inviteValidated = false;
 	var usernameValidated = false;
+	// var registrationForm = document.getElementById("registration-form");
 
 	function successIcon(elemID, icon, status) {
 		
@@ -107,12 +108,20 @@
 	function loadForm(formID) {
 
 		if (formID == "signup") {
-			document.getElementById("signup").style.display = "block"
-			document.getElementById("login").style.display = "none"
+			document.getElementById("password-reset").style.display = "none";
+			document.getElementById("signup").style.display = "block";
+			document.getElementById("login").style.display = "none";
 		}
 		else if (formID == "login") {
-			document.getElementById("signup").style.display = "none"
-			document.getElementById("login").style.display = "block"
+			document.getElementById("password-reset").style.display = "none";
+			document.getElementById("signup").style.display = "none";
+			document.getElementById("login").style.display = "block";
+		}
+		else if (formID = "password-reset") {
+			document.getElementById("password-reset").style.display = "block";
+			document.getElementById("signup").style.display = "none";
+			document.getElementById("login").style.display = "none";
+
 		}
 
 	}
@@ -167,8 +176,10 @@
 	function formSubmit(formObj) {
 
 		// Submit form synchronously and wait for submission status
-		
-		// if (passwordValidated && inviteValidated && usernameValidated) {
+		console.log(passwordValidated);
+		console.log(inviteValidated);
+		console.log(usernameValidated);
+		if (passwordValidated && inviteValidated && usernameValidated) {
 	
 			var querystring = getPostData(formObj);
 			var csrftoken = Cookies.get('csrftoken');
@@ -181,7 +192,10 @@
 	   		jsonObj = JSON.parse(xmlhttp.responseText);
 	   		if (jsonObj.status == 'SUCCESS') thankyouPage();
 	   		else registrationFail();
-	   	// }
+	   	}
+	   	else {
+	   		registrationFail();
+	   	}
 
 	}
 
@@ -195,9 +209,16 @@
 
 	function registrationFail() {
 
-		var msg = "Sorry, we were unable to create an account for you. Please";
-		msg += " verify your information and try again. If the problem continues, contact support.";
-		alert(msg); 
+		var html = "Unable to create an account. Please";
+		html += " verify your information and try again. If the problem continues, contact support.";
+		html += " <a id=\"registration-fail\" onclick=\"reloadRegistration()\">Take me Back</a>"
+		
+		document.getElementById("registration-form").innerHTML = html;
+		document.getElementById("registration-form").style.color = "#636363";
+	}
+
+	function reloadRegistration() {
+		window.location.href = "/";
 	}
 
 	function userLogin(formObj) {
@@ -286,9 +307,27 @@
 						<p class="message" onclick="loadForm('signup')">Not registered? 
 							<a >Create an account</a>
 						</p>
-						<p class="message"> Coming Soon: 
-							<a>Forgot password?</a>
+						<p class="message"> 
+							<a onclick="loadForm('password-reset')">Forgot password?</a>
 						</p>
+					</form>
+				</div>
+				<div id="password-reset">
+					<form class="password-reset" action="" method="post" onsubmit="return false">
+    				{% csrf_token %}
+    	
+						<div class="message" id="password-reset-message">
+							Please enter an email address to receive your password reset link.
+						</div>
+						<input type="text" placeholder="email" name="email" required/>
+						<button onclick="passwordReset(this.form)">Submit</button>
+						<p class="message" onclick="loadForm('signup')">Not registered? 
+							<a >Create an account</a>
+						</p>
+						<p class="message" onclick="loadForm('login')">Already registered? 
+							<a href="#">Sign In</a>
+						</p>
+						
 					</form>
 				</div>
 			</div>
