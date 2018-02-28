@@ -38,10 +38,11 @@ def username(function):
 
 		status = 'FAIL'
 		username = request.POST.get('username')
-		params = {'username': username}
-		exists = User.objects.filter(**params).exists()
-		if not exists:
-			status = 'SUCCESS'
+		if " " not in username and len(username.strip()) > 0:
+			params = {'username': username}
+			exists = User.objects.filter(**params).exists()
+			if not exists:
+				status = 'SUCCESS'
 		return function({'status': status})
 
 	return wrapper
