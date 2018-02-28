@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from uuid import uuid4
+from services import signals
 
 # from django.core.urlresolvers import reverse
 
@@ -25,8 +26,9 @@ class InviteCode(models.Model):
 	
 	def __unicode__(self):
 
-		# Model object name to show in the admin dashboard or in shell queries
-		return '%s' % (self.code)
+		# the toString() equivalent
+		label = "{} {} {}".format(self.first_name, self.last_name, self.email)
+		return '%s' % (label)
 
 	def save(self, *args, **kwargs):
 
@@ -66,3 +68,9 @@ class SiteUser(models.Model):
 
 	def invite(self):
 		return self.invite_code_input
+
+
+# handle updates to the db
+invite_signal_obj = signals.InviteSignal(InviteCode)
+invite_signal_obj.execute()
+

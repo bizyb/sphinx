@@ -2,6 +2,9 @@ from mail.templates import invitation
 from django.core.mail import EmailMultiAlternatives
 from documentation import settings
 
+import sphinxsite.services.loggers as loggers
+logger = loggers.Loggers(__name__).get_logger()
+
 def send_invite(model_obj=None):
 	'''
 	Compose an invitation email for account creation. 
@@ -12,37 +15,28 @@ def send_invite(model_obj=None):
 	sender = settings.EMAIL_SENDER
 	subject = "Invitation to Access Perfit API Documentation"
 
-	first_name = model_obj.first_name()
-	last_name = model_obj.last_name()
-	recipient = model_obj.email()
-	invite = model_obj.invite()
-
-	# first_name = "Sideshow"
-	# last_name = "Bob"
-	# recipient = "melesse@usc.edu"
-	# invite = "e8b46ad5-45f4-4bda-990b-29206351a6ab"
+	first_name = model_obj.first_name
+	last_name = model_obj.last_name
+	recipient = model_obj.email
+	invite = model_obj.code
 
 	html_content = html_template.format(first_name, first_name, last_name, recipient, invite)
 	txt_content = txt_template.format(first_name, first_name, last_name, recipient, invite)
 
-	email = EmailMultiAlternatives(subject, txt_content, sender, [recipient])
-	email.attach_alternative(html_content, "text/html")
-	email.send()
+	try:
+		email = EmailMultiAlternatives(subject, txt_content, sender, [recipient])
+		email.attach_alternative(html_content, "text/html")
+		email.send()
 
+		msg = "Sent a new invitation email to {} {} at {}"
+		msg = msg.format(first_name, last_name, recipient)
+		logger.info(msg)
 
+	except Exception as e:
+		msg = '{}: {}'.format(type(e).__name__, e.args[0])
+		logger.exception(msg)
 
-
-
-# 	subject, from_email, to = 'hello', 'from@example.com', 'to@example.com'
-# text_content = 'This is an important message.'
-# html_content = '<p>This is an <strong>important</strong> message.</p>'
-# msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-# msg.attach_alternative(html_content, "text/html")
-# msg.send()
-
-
-# 	msg = EmailMessage('Perfit Email Test', 'It Works!', , ['melesse@usc.edu'])
-
+	
 
 
 
