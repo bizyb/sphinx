@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^$', views.login_view, name='index_login'),
     url(r'^login$', views.login_view, name='login'),
     url(r'^logout$', views.logout_view, name='logout'),
+    url(r'^password-reset$', views.password_reset_view, name='password_reset'),
     url(r'^username-availability$', views.username_availability, name='username-availability'),
     url(r'^invite-code-validation$', views.validate_invite, name='invite-code-validation'),
     url(r'^registration$', views.registration, name='registration'),

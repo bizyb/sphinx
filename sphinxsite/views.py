@@ -93,6 +93,11 @@ def logout_view(request):
     logout(request)
     return HttpResponseRedirect("/")
 
+@decorators.POST_only
+def password_reset_view(request):
+    return JsonResponse({'status': 'SUCCESS'})
+
+
 
 
 @decorators.POST_only

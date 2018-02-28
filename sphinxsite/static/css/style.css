@@ -76,6 +76,14 @@ iframe {
 #password-reset .message {
   padding-bottom: 10px;
 }
+#password-reset-message {
+  color: #b3b3b3;
+  font-size: 14px;
+}
+#password-reset-message a {
+  text-decoration: none;
+  color: red;
+}
 .button input {
 	font-family: "Roboto", sans-serif;
 	text-transform: uppercase;

@@ -8,8 +8,7 @@
 	var passwordValidated = false;
 	var inviteValidated = false;
 	var usernameValidated = false;
-	// var registrationForm = document.getElementById("registration-form");
-
+	
 	function successIcon(elemID, icon, status) {
 		
 		if (status == "success") document.getElementById(elemID).style.color = "green";
@@ -241,9 +240,25 @@
    			// Redirect to the landingp page
    			window.location.href = xmlhttp.responseURL;
    		}
+	}
 
-   		 
-   	
+	function passwordReset(formObj) {
+
+		var email = formObj.email.value;
+		var qs = "email="+email;
+
+		var csrftoken = Cookies.get('csrftoken');
+		var xmlhttp = new XMLHttpRequest();
+   		xmlhttp.open("POST", "password-reset", false);
+   		xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
+   		xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+   		xmlhttp.send(qs);
+
+   		var html = "<div class=\"message\" id=\"password-reset-message\">Please check your email for a password reset link. ";
+		html += " <a href=\"/\">Take me Back</a></div>";
+
+		document.getElementById("password-reset").innerHTML = html;
+
 	}
 	
 </script>
@@ -313,14 +328,14 @@
 					</form>
 				</div>
 				<div id="password-reset">
-					<form class="password-reset" action="" method="post" onsubmit="return false">
+					<form class="password-reset-form" action="" method="post" onsubmit="passwordReset(this)">
     				{% csrf_token %}
     	
 						<div class="message" id="password-reset-message">
-							Please enter an email address to receive your password reset link.
+							Please enter the email address you used during sign-up to receive your password reset link.
 						</div>
-						<input type="text" placeholder="email" name="email" required/>
-						<button onclick="passwordReset(this.form)">Submit</button>
+						<input type="email" name="email" placeholder="Email" required/>
+						<button>Submit</button>
 						<p class="message" onclick="loadForm('signup')">Not registered? 
 							<a >Create an account</a>
 						</p>
