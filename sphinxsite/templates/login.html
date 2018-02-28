@@ -178,7 +178,7 @@
 		console.log(passwordValidated);
 		console.log(inviteValidated);
 		console.log(usernameValidated);
-		if (passwordValidated && inviteValidated && usernameValidated) {
+		// if (passwordValidated && inviteValidated && usernameValidated) {
 	
 			var querystring = getPostData(formObj);
 			var csrftoken = Cookies.get('csrftoken');
@@ -191,10 +191,10 @@
 	   		jsonObj = JSON.parse(xmlhttp.responseText);
 	   		if (jsonObj.status == 'SUCCESS') thankyouPage();
 	   		else registrationFail();
-	   	}
-	   	else {
-	   		registrationFail();
-	   	}
+	   	// }
+	   	// else {
+	   	// 	registrationFail();
+	   	// }
 
 	}
 

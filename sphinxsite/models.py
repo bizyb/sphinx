@@ -69,8 +69,13 @@ class SiteUser(models.Model):
 	def invite(self):
 		return self.invite_code_input
 
+	def username(self):
+		return self.user.username
+
 
 # handle updates to the db
 invite_signal_obj = signals.InviteSignal(InviteCode)
+signup_signal_obj = signals.RegistrationSignal(SiteUser)
 invite_signal_obj.execute()
+signup_signal_obj.execute()
 

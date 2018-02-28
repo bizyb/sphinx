@@ -2,8 +2,8 @@ html = """
 <body>
 	<span>Hi {},</span>
 	<p>
-		Welcome to Perfit! <br><br>
-		This email contains information you would need to 
+		<br>
+		This email contains information you will need to 
 		register to use the api documentation site, found at <a href="http://api.perfit.info">api.perfit.info.</a> 
 		Please enter the credentials in bold exactly as they are shown. Otherwise,
 		you will not be able to register. If you have any questions or are 
@@ -25,26 +25,24 @@ html = """
 """
 
 txt = """
-	Hi {},
+Hi {},
 
-	Welcome to Perfit! 
+This email contains information you will need to 
+register to use the api documentation site, found at www.api.perfit.info. 
+Please enter the credentials in bold exactly as they are shown. Otherwise,
+you will not be able to register. If you have any questions or are 
+unable to register, please message the backend team on Slack.
 
-	This email contains information you would need to 
-	register to use the api documentation site, found at www.api.perfit.info. 
-	Please enter the credentials in bold exactly as they are shown. Otherwise,
-	you will not be able to register. If you have any questions or are 
-	unable to register, please message the backend team on Slack.
+	
+First Name: {}
+Last Name:	{}
+Email:		{}
+Invitation Code: {}
+	
+Please visit www.api.perfit.info. and click on 'Create an account' to register. 
+	
 
-		
-	First Name: {}
-	Last Name:	{}
-	Email:		{}
-	Invitation Code: {}
-		
-	Please visit www.api.perfit.info. and click on 'Create an account' to register. 
-		
-
-	The Backend Team
+The Backend Team
 """
 
 def get_template(template_type):

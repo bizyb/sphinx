@@ -1,4 +1,4 @@
-from mail.templates import invitation
+from mail.templates import invitation, registration
 from django.core.mail import EmailMultiAlternatives
 from documentation import settings
 
@@ -35,6 +35,37 @@ def send_invite(model_obj=None):
 	except Exception as e:
 		msg = '{}: {}'.format(type(e).__name__, e.args[0])
 		logger.exception(msg)
+
+def signup_confirmation(model_obj=None):
+
+	txt_template = registration.get_template()
+
+	sender = settings.EMAIL_SENDER
+	subject = "Welcome to Perfit API Documentation"
+
+	first_name = model_obj.first_name()
+	last_name = model_obj.last_name()
+	username = model_obj.username()
+	recipient = model_obj.email()
+
+	txt_content = txt_template.format(first_name, username)
+
+	try:
+		email = EmailMultiAlternatives(subject, txt_content, sender, [recipient])
+		email.send()
+
+		msg = "Sent a registration confirmation to {} {} at {}"
+		msg = msg.format(first_name, last_name, recipient)
+		logger.info(msg)
+
+	except Exception as e:
+		msg = '{}: {}'.format(type(e).__name__, e.args[0])
+		logger.exception(msg)
+
+
+
+
+
 
 	
 
