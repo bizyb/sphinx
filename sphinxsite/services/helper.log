@@ -69,3 +69,24 @@ NameError: global name 'entry' is not defined
 2018-02-27 06:57:07,678 INFO: New signup form: {'username': u'sbob', 'first_name': u'Sideshow', 'last_name': u'Bob', 'invite_code_input': u'e8b46ad5-45f4-4bda-990b-29206351a6ab', 'team': u'3d', 'password': u'passwork1', 'email': u'bmelse2018@gmail.com'}
 2018-02-27 06:58:51,678 INFO: New signup form: {'user__username': u'sbob', 'user__first_name': u'Sideshow', 'user__last_name': u'Bob', 'invite_code_input': u'e8b46ad5-45f4-4bda-990b-29206351a6ab', 'team': u'3d', 'user__email': u'bmelse2018@gmail.com', 'user__password': u'passwork1'}
 2018-02-27 07:38:02,805 INFO: New signup form: {'username': u'sbob', 'first_name': u'Sideshow', 'last_name': u'Bob', 'invite_code_input': u'e8b46ad5-45f4-4bda-990b-29206351a6ab', 'team': u'3d', 'password': u'passwork1', 'email': u'bmelse2018@gmail.com'}
+2018-02-28 01:30:00,345 INFO: New signup form: {'username': u'bobby', 'first_name': u'Sideshow', 'last_name': u'Bob', 'invite_code_input': u'e8b46ad5-45f4-4bda-990b-29206351a6ab', 'team': u'3d', 'password': u'passwork1', 'email': u'bmelse2018@gmail.com'}
+2018-02-28 01:44:27,763 INFO: New signup form: {'username': u'', 'first_name': u'', 'last_name': u'', 'invite_code_input': u'', 'team': u'3d', 'password': u'', 'email': u''}
+2018-02-28 01:44:51,469 INFO: New signup form: {'username': u'', 'first_name': u'', 'last_name': u'', 'invite_code_input': u'', 'team': u'3d', 'password': u'', 'email': u''}
+2018-02-28 01:45:33,347 INFO: New signup form: {'username': u'bob', 'first_name': u'Bobby', 'last_name': u'Brown', 'invite_code_input': u'xyz', 'team': u'3d', 'password': u'passwork1', 'email': u'bob@burger.com'}
+2018-02-28 01:45:33,535 ERROR: IndexError: list index out of range
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 60, in create_new_user
+    invite_obj = invite_model.objects.filter(code=user_data.get('invite_code_input'))[0]
+  File "/Users/bm/usc/perfit_docenv/lib/python2.7/site-packages/django/db/models/query.py", line 295, in __getitem__
+    return list(qs)[0]
+IndexError: list index out of range
+2018-02-28 01:46:27,629 INFO: New signup form: {'username': u'bob', 'first_name': u'Bobby', 'last_name': u'Brown', 'invite_code_input': u'xyz', 'team': u'3d', 'password': u'passwork1', 'email': u'bob@b.com'}
+2018-02-28 01:51:52,483 INFO: New signup form: {'username': u'bob2', 'first_name': u'Bobby ', 'last_name': u'Brown', 'invite_code_input': u'xyz', 'team': u'3d', 'password': u'passwork1', 'email': u'bm@gmail.com'}
+2018-02-28 01:51:52,661 ERROR: IndexError: list index out of range
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 60, in create_new_user
+    invite_obj = invite_model.objects.filter(code=user_data.get('invite_code_input'))[0]
+  File "/Users/bm/usc/perfit_docenv/lib/python2.7/site-packages/django/db/models/query.py", line 295, in __getitem__
+    return list(qs)[0]
+IndexError: list index out of range
+2018-02-28 01:51:52,665 INFO: New user added: SiteUser object

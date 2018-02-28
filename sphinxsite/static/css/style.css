@@ -83,8 +83,15 @@
   color: #79797b;
   font-size: 16px;
 }
-#password-requirements, #presubmission-message {
+#password-requirements, #presubmission-message{
 	text-align: left;
+}
+
+#login-message {
+  text-align: left;
+  font-size: 14px;
+  color: red;
+  padding-bottom: 10px;
 }
 #presubmission-message {
 	color: red;

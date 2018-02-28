@@ -1,4 +1,5 @@
 from django.http import HttpResponseForbidden
+from django.contrib.auth.models import User
 from sphinxsite import models as sphinx_models
 
 def invite(function):
@@ -37,8 +38,8 @@ def username(function):
 
 		status = 'FAIL'
 		username = request.POST.get('username')
-		params = {'user__username': username}
-		exists = sphinx_models.SiteUser.objects.filter(**params).exists()
+		params = {'username': username}
+		exists = User.objects.filter(**params).exists()
 		if not exists:
 			status = 'SUCCESS'
 		return function({'status': status})

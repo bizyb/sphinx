@@ -18,7 +18,7 @@
 		document.getElementById(elemID).innerHTML = icon;
 	}
 
-	
+
 	function ajaxValidation(valueType, value, elemID, formObj) {
 
 		if (value != "") {
@@ -168,7 +168,7 @@
 
 		// Submit form synchronously and wait for submission status
 		
-		if (passwordValidated && inviteValidated && usernameValidated) {
+		// if (passwordValidated && inviteValidated && usernameValidated) {
 	
 			var querystring = getPostData(formObj);
 			var csrftoken = Cookies.get('csrftoken');
@@ -181,7 +181,7 @@
 	   		jsonObj = JSON.parse(xmlhttp.responseText);
 	   		if (jsonObj.status == 'SUCCESS') thankyouPage();
 	   		else registrationFail();
-	   	}
+	   	// }
 
 	}
 
@@ -199,56 +199,98 @@
 		msg += " verify your information and try again. If the problem continues, contact support.";
 		alert(msg); 
 	}
+
+	function userLogin(formObj) {
+
+		var username = formObj.username.value;
+		var password = formObj.password.value;
+		var qs = "username="+username+"&password="+password;
+
+		var csrftoken = Cookies.get('csrftoken');
+		var xmlhttp = new XMLHttpRequest();
+   		xmlhttp.open("POST", "login", false);
+   		xmlhttp.setRequestHeader("X-CSRFToken", csrftoken);
+   		xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+   		xmlhttp.send(qs);
+
+   		if (xmlhttp.responseURL.includes("login")){
+   			document.getElementById("login-message").innerHTML = "Username or password not recognized"
+   		}
+   		else {
+   			// Redirect to the landingp page
+   			window.location.href = xmlhttp.responseURL;
+   		}
+
+   		 
+   	
+	}
 	
 </script>
 <div class="login-page">
-  <div class="form" id="registration-form">
-  	<div id="signup">
-    <form class="register-form" method="post" action="" onsubmit="formSubmit(this)">
+	<div class="form" id="registration-form">
+		<div id="signup">
+			<form class="register-form" method="post" action="" onsubmit="formSubmit(this)">
  		{% csrf_token %}
- 		<div class="message" id="registration-fail-msg"></div>
-      <input type="text" name="first_name" id="first-name" placeholder="First Name" required/>
-      <input type="text" name="last_name" id="last-name" placeholder="Last Name" required/>
-     <div> <input type="text" name="username" id="username" placeholder="Username"  required 
-      		onkeyup="usernameExists(this)"/><div class="username-exists-box" id="username-exists"></div></div>
-      <input type="email" name="email" placeholder="Email" required/>
-
-
-      <div class="message" id="password-requirements">
-      	Password must be at least 8 characters long and may contain numbers, letters, and underscores<br>
-      	<input type="password" placeholder="Create a password" name="password1" 
-      	id="password1" onkeyup="passwordMatch()" required/></div>
-      <div><input type="password" placeholder="Confirm your password" name="password2"  required id="password2" onkeyup="passwordMatch()"/>
-      <div class="password-match-box" id="password-match"></div></div>
-
-      <div class="team-dropdown">Team
-      <select name="team_name" id="team">
-      	<option value="3d">3D</option>
-          <option value="android">Android</option>
-          <option value="backend">Backend</option>
-          <option value="frontend">Frontend</option>
-          <option value="ios">iOS</option>
-          <option value="ml">ML</option>
-       </select>
-   </div>
-       <div><input type="text" id="invite-code" name="invite_code" placeholder="Invite code" required onkeyup="validateInvite(this, this.form)"/><div class="invite-validation-box" id="invite-is-valid"></div></div>
-      <div class="button"><button id="signup-button">Register</div>
-      <div class="message" id="presubmission-message">
-      </div>
-
-      <p class="message" onclick="loadForm('login')">Already registered? <a href="#">Sign In</a></p>
-    </form>
-</div>
-<div id="login">
-    <form class="login-form" action="" method="post">
+ 		
+				<div class="message" id="registration-fail-msg"></div>
+				<input type="text" name="first_name" id="first-name" placeholder="First Name" />
+				<input type="text" name="last_name" id="last-name" placeholder="Last Name" />
+				<div>
+					<input type="text" name="username" id="username" placeholder="Username"   
+      		onkeyup="usernameExists(this)"/>
+					<div class="username-exists-box" id="username-exists"></div>
+				</div>
+				<input type="email" name="email" placeholder="Email" />
+				<div class="message" id="password-requirements">
+      	Password must be at least 8 characters long and may contain numbers, letters, and underscores
+					<br>
+						<input type="password" placeholder="Create a password" name="password1" 
+      	id="password1" onkeyup="passwordMatch()" />
+					</div>
+					<div>
+						<input type="password" placeholder="Confirm your password" name="password2"   id="password2" onkeyup="passwordMatch()"/>
+						<div class="password-match-box" id="password-match"></div>
+					</div>
+					<div class="team-dropdown">Team
+      
+						<select name="team_name" id="team">
+							<option value="3d">3D</option>
+							<option value="android">Android</option>
+							<option value="backend">Backend</option>
+							<option value="frontend">Frontend</option>
+							<option value="ios">iOS</option>
+							<option value="ml">ML</option>
+						</select>
+					</div>
+					<div>
+						<input type="text" id="invite-code" name="invite_code" placeholder="Invite code"  onkeyup="validateInvite(this, this.form)"/>
+						<div class="invite-validation-box" id="invite-is-valid"></div>
+					</div>
+					<div class="button">
+						<button id="signup-button">Register
+						</div>
+						<div class="message" id="presubmission-message"></div>
+						<p class="message" onclick="loadForm('login')">Already registered? 
+							<a href="#">Sign In</a>
+						</p>
+					</form>
+				</div>
+				<div id="login">
+					<form class="login-form" action="" method="post" onsubmit="return false">
     	{% csrf_token %}
-      <input type="text" placeholder="username"/>
-      <input type="password" placeholder="password"/>
-      <button>login</button>
-      <p class="message" onclick="loadForm('signup')">Not registered? <a >Create an account</a></p>
-      <p class="message"> Coming Soon: <a>Forgot password?</a></p>
-    </form>
-</div>
-  </div>
-</div>
+    	
+						<div class="message" id="login-message"></div>
+						<input type="text" placeholder="username" name="username" required/>
+						<input type="password" placeholder="password" name="password" required/>
+						<button onclick="userLogin(this.form)">login</button>
+						<p class="message" onclick="loadForm('signup')">Not registered? 
+							<a >Create an account</a>
+						</p>
+						<p class="message"> Coming Soon: 
+							<a>Forgot password?</a>
+						</p>
+					</form>
+				</div>
+			</div>
+		</div>
 {% endblock %}

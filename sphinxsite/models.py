@@ -51,7 +51,7 @@ class SiteUser(models.Model):
 
 	user 				= models.OneToOneField(User, on_delete=models.CASCADE)
 	invite_code_input 	= models.CharField(max_length=64, blank=False, null=False)
-	invite_code 		= models.ForeignKey(InviteCode, related_name="siteuser_invitecode")
+	invite_code 		= models.ForeignKey(InviteCode, related_name="siteuser_invitecode", null=True)
 	team 				= models.CharField(max_length=64, blank=True, null=False)
 
 
