@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from mail import config as email_configs
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -130,6 +131,14 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+# Email Settings
+EMAIL_HOST = email_configs.EMAIL_HOST
+EMAIL_PORT = email_configs.EMAIL_PORT
+EMAIL_HOST_USER = email_configs.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = email_configs.EMAIL_HOST_PASSWORD
+EMAIL_USE_SSL = email_configs.EMAIL_USE_SSL
 
 
 # Static files (CSS, JavaScript, Images)
