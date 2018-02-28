@@ -1,6 +1,6 @@
 from django.http import JsonResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate, login as django_login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from sphinxsite.services import helper, decorators
 from sphinxsite import models as sphinx_models
@@ -61,35 +61,37 @@ def registration(request):
         su = sphinx_models.SiteUser
         ic = sphinx_models.InviteCode
         helper.create_new_user(context.get('form_data'), su, ic)
+        username = context.get('form_data').get('username')
+        password = context.get('form_data').get('password')
+        helper.user_login(request, username, password)
 
-        
     return JsonResponse({'status': context.get('status')})
 
 
-def login(request):
 
-    # re-direct if user already logged in 
+def login_view(request):
+
     if request.method == "POST":
-        print request.POST
+
         username = request.POST.get("username")
         password = request.POST.get("password")
+        success = helper.user_login(request, username, password)
 
-        if username and password:
-            user = authenticate(request=request, username=username, password=password)
-            print "user-------------: ", user
-            if user is not None:
-                django_login(request, user)
-                return HttpResponseRedirect("apidocs") 
-                # return redirect('apidocs')
-                # return JsonResponse({'status': 'SUCCESS'})
-            else:
-
-                return JsonResponse({'status': 'FAIL'})
+        if success:
+            return HttpResponseRedirect("apidocs")
+        else:
+            # return value not used by the client
+            return JsonResponse({'status': 'FAIL'})                
 
     if request.user.is_authenticated:
         return redirect('apidocs')
     else:
         return render(request, 'login.html', {})
+
+def logout_view(request):
+
+    logout(request)
+    return HttpResponseRedirect("/")
 
 
 
@@ -100,7 +102,6 @@ def username_availability(request):
     Note: The original request object is a data structure with all the HTTP 
     attributes. However, the request returned by the decorator is a dictionary.
     '''
-    print '-----------------request: ', request
     return JsonResponse(request)
 
     

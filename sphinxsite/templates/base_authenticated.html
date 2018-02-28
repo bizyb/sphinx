@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+	<title>Perfit Official API Documentation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" />
+    <script type="text/javascript" src="{% static 'js/cookies.js' %}"></script>
+</head>
+<body>
+	<div class="logout-container">
+		<a href="logout"><strong>Logout</strong></a>
+	</div>
+
+	 <div class='page-wrapper'>
+    {% block content %} {% endblock %}
+    </div>
+
+</body>
+</html>

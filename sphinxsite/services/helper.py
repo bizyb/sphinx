@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from sphinxsite.services import loggers
 logger = loggers.Loggers(__name__).get_logger()
 
@@ -71,6 +72,30 @@ def create_new_user(user_data, user_model, invite_model):
 	site_user_obj = user_model.objects.create(**params)
 	msg = "New user added: {}".format(site_user_obj)
 	logger.info(msg)
+
+def user_login(request, username, password):
+
+	success = False
+	if username and password:
+		credentials = {
+			'request': request,
+			'username': username,
+			'password': password
+		}
+		user = authenticate(**credentials)
+		if user is not None:
+			login(request, user)
+			success = True
+	return success
+
+
+
+
+
+
+
+
+
 
 
 

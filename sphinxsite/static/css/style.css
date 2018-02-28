@@ -69,6 +69,21 @@
 	transition: all 0.3 ease;
 	cursor: pointer;
 }
+.logout-container {
+  float: right;
+color: #fff;
+text-transform: uppercase;
+background: red !important;
+font-weight: 700;
+font-size: 14px;
+padding: 5px;
+margin-top: -5px;
+margin-right: -5px;
+}
+.logout-container a {
+  text-decoration: none;
+  color: inherit;
+}
 .username-exists-box, .password-match-box, .invite-validation-box{
 	margin-right: -310px;
 	margin-right: -310px;
