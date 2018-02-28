@@ -1,7 +1,11 @@
 {% extends 'base_authenticated.html' %}
 
 {% block content %}
-
-
+	<div class="sphinx-iframe">
+		<iframe id="sphinx-iframe-obj" src="http://readthedocs.perfit.info"></iframe>
+	</div>
+<script type="text/javascript">
+	document.getElementsByTagName("iframe")[0].style.height = window.innerHeight + "px";
+</script>
 
 {% endblock %}

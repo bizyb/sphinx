@@ -1,0 +1,265 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Perfit Official Documentation &mdash; Perfit 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Perfit 1.0.0 documentation" href="#" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">Perfit 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="perfit-official-documentation">
+<h1><a class="toc-backref" href="#id1">Perfit Official Documentation</a><a class="headerlink" href="#perfit-official-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="sidebar">
+<p class="first sidebar-title">Summary</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Release:</th><td class="field-body">1.0.0</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date:</th><td class="field-body">February 14, 2018</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body"><strong>Backend Team, Spring 2018</strong></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Target:</th><td class="field-body">developers and administrators</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#perfit-official-documentation" id="id1">Perfit Official Documentation</a></li>
+<li><a class="reference internal" href="#documentation" id="id2">Documentation</a><ul>
+<li><a class="reference internal" href="#documenting-with-sphinx" id="id3">Documenting with Sphinx</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#system-architecture" id="id4">System Architecture</a><ul>
+<li><a class="reference internal" href="#amazon-web-services-aws" id="id5">Amazon Web Services (AWS</a><ul>
+<li><a class="reference internal" href="#ec2" id="id6">EC2</a></li>
+<li><a class="reference internal" href="#s3" id="id7">S3</a></li>
+<li><a class="reference internal" href="#route53" id="id8">Route53</a></li>
+<li><a class="reference internal" href="#database" id="id9">Database</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#console-access-through-ssh" id="id10">Console Access through SSH</a></li>
+<li><a class="reference internal" href="#nginx-server-configuration" id="id11">Nginx Server Configuration</a></li>
+<li><a class="reference internal" href="#flask-deployment-with-gunicorn" id="id12">Flask Deployment with Gunicorn</a></li>
+<li><a class="reference internal" href="#supervisor" id="id13">Supervisor</a></li>
+<li><a class="reference internal" href="#version-control-github-aws" id="id14">Version Control (GitHub) + AWS</a></li>
+<li><a class="reference internal" href="#dns" id="id15">DNS</a></li>
+<li><a class="reference internal" href="#subdomains" id="id16">Subdomains</a></li>
+<li><a class="reference internal" href="#security-https" id="id17">Security (HTTPS)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api-documentation" id="id18">API Documentation</a><ul>
+<li><a class="reference internal" href="#backend" id="id19">Backend</a></li>
+<li><a class="reference internal" href="#frontend" id="id20">Frontend</a></li>
+<li><a class="reference internal" href="#ios" id="id21">iOS</a></li>
+<li><a class="reference internal" href="#android" id="id22">Android</a></li>
+<li><a class="reference internal" href="#d" id="id23">3D</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Credentials and additional documentation may be found at:</dt>
+<dd><ul class="first last simple">
+<li>Perfit Google Drive</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="documentation">
+<h1><a class="toc-backref" href="#id2">Documentation</a><a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="documenting-with-sphinx">
+<h2><a class="toc-backref" href="#id3">Documenting with Sphinx</a><a class="headerlink" href="#documenting-with-sphinx" title="Permalink to this headline">¶</a></h2>
+<p>Documenting Python and C++ code with Sphinx is relatively painless, requiring nothing more than following Sphinx commenting markup guidelines.
+A complete tutorial can be found at:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://openalea.gforge.inria.fr/doc/openalea/doc/_build/html/source/sphinx/rest_syntax.html">Sphinx Cheatsheet</a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="system-architecture">
+<h1><a class="toc-backref" href="#id4">System Architecture</a><a class="headerlink" href="#system-architecture" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="amazon-web-services-aws">
+<h2><a class="toc-backref" href="#id5">Amazon Web Services (AWS</a><a class="headerlink" href="#amazon-web-services-aws" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ec2">
+<h3><a class="toc-backref" href="#id6">EC2</a><a class="headerlink" href="#ec2" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="s3">
+<h3><a class="toc-backref" href="#id7">S3</a><a class="headerlink" href="#s3" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="route53">
+<h3><a class="toc-backref" href="#id8">Route53</a><a class="headerlink" href="#route53" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="database">
+<h3><a class="toc-backref" href="#id9">Database</a><a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="console-access-through-ssh">
+<h2><a class="toc-backref" href="#id10">Console Access through SSH</a><a class="headerlink" href="#console-access-through-ssh" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="nginx-server-configuration">
+<h2><a class="toc-backref" href="#id11">Nginx Server Configuration</a><a class="headerlink" href="#nginx-server-configuration" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="flask-deployment-with-gunicorn">
+<h2><a class="toc-backref" href="#id12">Flask Deployment with Gunicorn</a><a class="headerlink" href="#flask-deployment-with-gunicorn" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="supervisor">
+<h2><a class="toc-backref" href="#id13">Supervisor</a><a class="headerlink" href="#supervisor" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="version-control-github-aws">
+<h2><a class="toc-backref" href="#id14">Version Control (GitHub) + AWS</a><a class="headerlink" href="#version-control-github-aws" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="dns">
+<h2><a class="toc-backref" href="#id15">DNS</a><a class="headerlink" href="#dns" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="subdomains">
+<h2><a class="toc-backref" href="#id16">Subdomains</a><a class="headerlink" href="#subdomains" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="security-https">
+<h2><a class="toc-backref" href="#id17">Security (HTTPS)</a><a class="headerlink" href="#security-https" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="api-documentation">
+<h1><a class="toc-backref" href="#id18">API Documentation</a><a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="backend">
+<h2><a class="toc-backref" href="#id19">Backend</a><a class="headerlink" href="#backend" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="frontend">
+<h2><a class="toc-backref" href="#id20">Frontend</a><a class="headerlink" href="#frontend" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="ios">
+<h2><a class="toc-backref" href="#id21">iOS</a><a class="headerlink" href="#ios" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="android">
+<h2><a class="toc-backref" href="#id22">Android</a><a class="headerlink" href="#android" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="d">
+<h2><a class="toc-backref" href="#id23">3D</a><a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Perfit Official Documentation</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a><ul>
+<li><a class="reference internal" href="#documenting-with-sphinx">Documenting with Sphinx</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#system-architecture">System Architecture</a><ul>
+<li><a class="reference internal" href="#amazon-web-services-aws">Amazon Web Services (AWS</a><ul>
+<li><a class="reference internal" href="#ec2">EC2</a></li>
+<li><a class="reference internal" href="#s3">S3</a></li>
+<li><a class="reference internal" href="#route53">Route53</a></li>
+<li><a class="reference internal" href="#database">Database</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#console-access-through-ssh">Console Access through SSH</a></li>
+<li><a class="reference internal" href="#nginx-server-configuration">Nginx Server Configuration</a></li>
+<li><a class="reference internal" href="#flask-deployment-with-gunicorn">Flask Deployment with Gunicorn</a></li>
+<li><a class="reference internal" href="#supervisor">Supervisor</a></li>
+<li><a class="reference internal" href="#version-control-github-aws">Version Control (GitHub) + AWS</a></li>
+<li><a class="reference internal" href="#dns">DNS</a></li>
+<li><a class="reference internal" href="#subdomains">Subdomains</a></li>
+<li><a class="reference internal" href="#security-https">Security (HTTPS)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api-documentation">API Documentation</a><ul>
+<li><a class="reference internal" href="#backend">Backend</a></li>
+<li><a class="reference internal" href="#frontend">Frontend</a></li>
+<li><a class="reference internal" href="#ios">iOS</a></li>
+<li><a class="reference internal" href="#android">Android</a></li>
+<li><a class="reference internal" href="#d">3D</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">Perfit 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2018, Perfit Inc..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.
+    </div>
+  </body>
+</html>

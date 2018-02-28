@@ -1,5 +1,23 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+body, html {
+  height: 100%
+}
+body {
+  margin-left: 0px;
+  margin-right: -15px;
+  overflow: hidden;
+}
+iframe {
+  width: 100%;
+  border: none;
+  display: block;
+  overflow: hidden;
+
+}
+.sphinx-iframe {
+  height: 100%;
+}
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -78,7 +96,7 @@ font-weight: 700;
 font-size: 14px;
 padding: 5px;
 margin-top: -5px;
-margin-right: -5px;
+margin-right: 20px;
 }
 .logout-container a {
   text-decoration: none;
@@ -157,7 +175,7 @@ margin-right: -5px;
   color: #EF3B3A;
 }
 body {
-  background: #11303d; /* fallback for old browsers */
+  background: #133f52; /* fallback for old browsers */
   /*background: -webkit-linear-gradient(right, #76b852, #8DC26F);
   background: -moz-linear-gradient(right, #76b852, #8DC26F);
   background: -o-linear-gradient(right, #76b852, #8DC26F);
