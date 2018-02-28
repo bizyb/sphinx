@@ -134,6 +134,7 @@ USE_TZ = True
 
 
 # Email Settings
+EMAIL_SENDER = email_configs.EMAIL_SENDER
 EMAIL_HOST = email_configs.EMAIL_HOST
 EMAIL_PORT = email_configs.EMAIL_PORT
 EMAIL_HOST_USER = email_configs.EMAIL_HOST_USER
