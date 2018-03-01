@@ -27,11 +27,10 @@ SECRET_KEY = 'lz!k_xq7d8^f2q&8i=u!h@#!bp_-8fai-khdvwv9%n60+t&wjr'
 DEBUG = False
 
 ALLOWED_HOSTS =  [
-                    'readthedocs.perfit.info',
                     'api.perfit.info',
                     'localhost',
                     '127.0.0.1',
-                    # add aws instance ip here
+                    '13.59.212.108', #AWS documentation instance
                     # add aws instance endpoint here
                 ]
 
@@ -146,3 +145,4 @@ EMAIL_USE_SSL = email_configs.EMAIL_USE_SSL
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
