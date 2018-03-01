@@ -27,14 +27,6 @@ urlpatterns = [
     url(r'^apidocs$', views.apidocs, name='apidocs'),
     url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
                views.password_reset_view, name='password_reset'),
-
-    
-    # url(r'^data-interpretation/$', cache_page(CACHE_LENGTH)(views.data_interpretation), name='interpretation'),
-    # url(r'^terms/$', cache_page(CACHE_LENGTH)(views.terms), name='terms'),
-    # url(r'^privacy/$', cache_page(CACHE_LENGTH)(views.privacy), name='privacy'),
-    # url(r'^reviews/[-\w]+/$', cache_page(CACHE_LENGTH)(views.reviews), name = 'topical_reviews'),
-    # url(r'^(?P<slug>[-\w]+)/$', cache_page(CACHE_LENGTH)(views.ArticleDetailView.as_view()), name = 'review'),
-
 ]
 
 # if settings.DEBUG:

@@ -1,13 +1,8 @@
 from __future__ import unicode_literals
-# from django.contrib import admin
 from django.db import models
 from django.contrib.auth.models import User
 from uuid import uuid4
 from services import signals
-
-# from django.core.urlresolvers import reverse
-
-# import services.signals as signals
 
 
 class InviteCode(models.Model):
