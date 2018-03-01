@@ -11,22 +11,22 @@
  		{% csrf_token %}
  		
 				<div class="message" id="registration-fail-msg"></div>
-				<input type="text" name="first_name" id="first-name" placeholder="First Name" />
-				<input type="text" name="last_name" id="last-name" placeholder="Last Name" />
+				<input type="text" name="first_name" id="first-name" placeholder="First Name" required/>
+				<input type="text" name="last_name" id="last-name" placeholder="Last Name" required/>
 				<div>
 					<input type="text" name="username" id="username" placeholder="Username"   
-      		onkeyup="usernameExists(this)"/>
+      		onkeyup="usernameExists(this)" required/>
 					<div class="username-exists-box" id="username-exists"></div>
 				</div>
-				<input type="email" name="email" placeholder="Email" />
+				<input type="email" name="email" placeholder="Email" required/>
 				<div class="message" id="password-requirements">
       	Password must be at least 8 characters long and may contain numbers, letters, and underscores
 					<br>
 						<input type="password" placeholder="Create a password" name="password1" 
-      	id="password1" onkeyup="passwordMatch()" />
+      	id="password1" onkeyup="passwordMatch()" required/>
 					</div>
 					<div>
-						<input type="password" placeholder="Confirm your password" name="password2"   id="password2" onkeyup="passwordMatch()"/>
+						<input type="password" placeholder="Confirm your password" name="password2"   id="password2" onkeyup="passwordMatch()" required/>
 						<div class="password-match-box" id="password-match"></div>
 					</div>
 					<div class="team-dropdown">Team
@@ -41,7 +41,7 @@
 						</select>
 					</div>
 					<div>
-						<input type="text" id="invite-code" name="invite_code" placeholder="Invite code"  onkeyup="validateInvite(this, this.form)"/>
+						<input type="text" id="invite-code" name="invite_code" placeholder="Invite code"  onkeyup="validateInvite(this, this.form)" required/>
 						<div class="invite-validation-box" id="invite-is-valid"></div>
 					</div>
 					<div class="button">
