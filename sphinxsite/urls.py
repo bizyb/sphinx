@@ -20,12 +20,13 @@ from . import views
 urlpatterns = [
     url(r'^$', views.login_view, name='index_login'),
     url(r'^login$', views.login_view, name='login'),
-    url(r'^logout$', views.logout_view, name='logout'),
-    url(r'^password-reset$', views.password_reset_view, name='password_reset'),
+    url(r'^logout$', views.logout_view, name='logout'), 
     url(r'^username-availability$', views.username_availability, name='username-availability'),
     url(r'^invite-code-validation$', views.validate_invite, name='invite-code-validation'),
     url(r'^registration$', views.registration, name='registration'),
     url(r'^apidocs$', views.apidocs, name='apidocs'),
+    url(r'^password-reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+               views.password_reset_view, name='password_reset'),
 
     
     # url(r'^data-interpretation/$', cache_page(CACHE_LENGTH)(views.data_interpretation), name='interpretation'),

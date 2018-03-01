@@ -5,7 +5,7 @@ from documentation import settings
 import sphinxsite.services.loggers as loggers
 logger = loggers.Loggers(__name__).get_logger()
 
-def send_invite(model_obj=None):
+def send_invite(model_obj):
 	'''
 	Compose an invitation email for account creation. 
 	'''
@@ -36,7 +36,7 @@ def send_invite(model_obj=None):
 		msg = '{}: {}'.format(type(e).__name__, e.args[0])
 		logger.exception(msg)
 
-def signup_confirmation(model_obj=None):
+def signup_confirmation(model_obj):
 
 	txt_template = registration.get_template()
 
@@ -61,6 +61,10 @@ def signup_confirmation(model_obj=None):
 	except Exception as e:
 		msg = '{}: {}'.format(type(e).__name__, e.args[0])
 		logger.exception(msg)
+
+def password_reset(request):
+	
+	email = request.POST.get("email")
 
 
 
