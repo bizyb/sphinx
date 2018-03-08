@@ -129,3 +129,10 @@ IndexError: list index out of range
 2018-02-28 20:30:09,119 INFO: New user added: SiteUser object
 2018-03-02 22:19:49,059 INFO: New signup form: {'username': u'sample', 'first_name': u'sample', 'last_name': u'sample', 'invite_code_input': u'ba318605-4603-4b5f-b242-969176591dc1', 'team': u'backend', 'password': u'Foam238bald802', 'email': u'gaurav.gireesh@gmail.com'}
 2018-03-02 22:19:50,947 INFO: New user added: SiteUser object
+2018-03-08 21:55:00,760 ERROR: NameError: global name 'lxml' is not defined
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 146, in load_sphinx_page
+    html = _parse_html(html_raw)
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 131, in _parse_html
+    soup = BeautifulSoup(raw, lxml)
+NameError: global name 'lxml' is not defined

@@ -123,6 +123,16 @@ def _sphinx_load_error():
 
 	return html
 
+def _parse_html(raw):
+	'''
+	Parse raw html file and return all the content contained within
+	the body tag.
+	'''
+	soup = BeautifulSoup(raw, 'lxml')
+	body = soup.find("body")
+	body = str(body).replace("<body>", "").replace("</body>", "")
+	return body
+
 def load_sphinx_page(file_name):
 
 	root_dir = SphinxConfig.objects.all()[0].root_dir
@@ -131,18 +141,15 @@ def load_sphinx_page(file_name):
 	html = _sphinx_load_error()
 
 	try:
-
-		
-
+		with open(file_path, "r") as f:
+			html_raw = f.read()
+			html = _parse_html(html_raw)
+			
 	except Exception as e:
 		msg = '{}: {}'.format(type(e).__name__, e.args[0])
 		logger.exception(msg)
 		
-
 	return html
-
-	# print "root_dir:--------------------------------- ", root_dir 
-	# return "test content"
 
 
 
