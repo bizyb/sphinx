@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from sphinxsite.services import loggers
 from sphinxsite.models import SphinxConfig
 from bs4 import BeautifulSoup
+import os
 
 logger = loggers.Loggers(__name__).get_logger()
 
@@ -92,16 +93,37 @@ def user_login(request, username, password):
 			success = True
 	return success
 
-def get_sphinx_page_type(request):
+def _get_sphinx_file_path(request):
 
-	current_url = resolve(request.path_info).url_name
-	if "/" not in current_url:
-		# We're at the landing page 
-		page_to_load = "index.html"
-	return page_to_load
+	'''
+	Parse the url of a request to build an absolute path for a sphinx 
+	file stored locally.
+
+	E.g.
+		requested url = http://api.perfit.info/apidocs/_sources/genindex.html 
+		landing_url = apidocs
+		current_url = _sources/genindex.html
+		file_path = sphinx_root_dir/current_url
+
+	'''
 	
-	# return "index.html"
+	landing_url = resolve(request.path_info).url_name
+	current_url = request.build_absolute_uri()
+	current_url = current_url.split(landing_url + "/")[-1]
 
+	filename, file_extension = os.path.splitext(current_url)	
+	root_dir = SphinxConfig.objects.all()[0].root_dir
+
+	if not filename:
+		# filename should be empty if we're on the landing page
+		current_url = "index.html"
+	
+
+	file_path = root_dir + "/" + current_url
+
+	return file_path
+
+	
 def _sphinx_load_error():
 	'''
 	Generate an html error message if Django has failed to load a 
@@ -123,33 +145,40 @@ def _sphinx_load_error():
 
 	return html
 
-def _parse_html(raw):
+def _parse_html(raw, file_path):
 	'''
 	Parse raw html file and return all the content contained within
-	the body tag.
+	the body tag. If the raw file is not an HTML file, return it as is. 
 	'''
-	soup = BeautifulSoup(raw, 'lxml')
-	body = soup.find("body")
-	body = str(body).replace("<body>", "").replace("</body>", "")
+	filename, file_extension = os.path.splitext(file_path)
+
+	body = raw
+	if file_extension == ".html":
+		soup = BeautifulSoup(raw, 'lxml')
+		body = soup.find("body")
+		body = str(body).replace("<body>", "").replace("</body>", "")
+
 	return body
 
-def load_sphinx_page(file_name):
+def load_sphinx_page(request):
 
-	root_dir = SphinxConfig.objects.all()[0].root_dir
-	file_path = root_dir + "/" + file_name
-
+	
+	file_path = _get_sphinx_file_path(request)
+	
 	html = _sphinx_load_error()
 
 	try:
 		with open(file_path, "r") as f:
 			html_raw = f.read()
-			html = _parse_html(html_raw)
+			html = _parse_html(html_raw, file_path)
 			
 	except Exception as e:
 		msg = '{}: {}'.format(type(e).__name__, e.args[0])
 		logger.exception(msg)
 		
 	return html
+
+	
 
 
 

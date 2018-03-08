@@ -136,3 +136,93 @@ Traceback (most recent call last):
   File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 131, in _parse_html
     soup = BeautifulSoup(raw, lxml)
 NameError: global name 'lxml' is not defined
+2018-03-08 22:14:04,569 ERROR: IOError: 2
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 174, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/_sources/genindex.html'
+2018-03-08 22:15:10,221 ERROR: IOError: 2
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 174, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/_sources/py-modindex.html'
+2018-03-08 22:15:14,743 ERROR: IOError: 2
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 174, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/backend.html'
+2018-03-08 22:15:36,482 ERROR: IOError: 2
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 174, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/backend.html'
+2018-03-08 22:15:59,667 ERROR: IOError: 21
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 174, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 21] Is a directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/'
+2018-03-08 22:20:46,891 ERROR: IOError: 21
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 178, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 21] Is a directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/'
+2018-03-08 22:21:48,231 ERROR: IOError: 21
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 178, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 21] Is a directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/'
+2018-03-08 22:22:07,703 ERROR: IOError: 21
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 178, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 21] Is a directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/'
+2018-03-08 22:22:21,562 ERROR: IOError: 21
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 178, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 21] Is a directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/'
+2018-03-08 22:22:44,269 ERROR: IOError: 21
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 178, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 21] Is a directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/'
+2018-03-08 22:25:26,841 ERROR: IOError: 2
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 183, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/index.html'
+2018-03-08 22:25:51,397 ERROR: TypeError: _parse_html() takes exactly 2 arguments (1 given)
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 186, in load_sphinx_page
+    html = _parse_html(html_raw)
+TypeError: _parse_html() takes exactly 2 arguments (1 given)
+2018-03-08 22:26:23,282 ERROR: IOError: 2
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 184, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/_sources/index.rst.txt'
+2018-03-08 22:27:52,456 ERROR: IOError: 2
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 184, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/search.html?q=cloth'
+2018-03-08 22:28:11,704 ERROR: IOError: 2
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 184, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/_sources/index.rst.txt'
+2018-03-08 22:28:15,500 ERROR: IOError: 2
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 184, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/_sources/index.rst.txt'
+2018-03-08 22:31:53,069 ERROR: IOError: 21
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 184, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 21] Is a directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/_build/html/'
+2018-03-08 22:31:58,123 ERROR: IOError: 21
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 184, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 21] Is a directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/_build/html/'

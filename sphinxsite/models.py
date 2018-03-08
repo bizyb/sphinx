@@ -38,8 +38,8 @@ class SphinxConfig(models.Model):
 	TODO: Add more config fields as needed and update admin.py.
 	'''
 
-	help_text = "Root directory of sphinx-generated files. Eg. ../_build_html/html"
-	help_text += " where .. is the path to the parent directory"
+	help_text = "Root directory of sphinx-generated files. Directory name must "
+	help_text += "NOT end with a slash."
 
 
 	root_dir = models.CharField(max_length=256, help_text=help_text)
