@@ -127,3 +127,5 @@ Traceback (most recent call last):
     return list(qs)[0]
 IndexError: list index out of range
 2018-02-28 20:30:09,119 INFO: New user added: SiteUser object
+2018-03-02 22:19:49,059 INFO: New signup form: {'username': u'sample', 'first_name': u'sample', 'last_name': u'sample', 'invite_code_input': u'ba318605-4603-4b5f-b242-969176591dc1', 'team': u'backend', 'password': u'Foam238bald802', 'email': u'gaurav.gireesh@gmail.com'}
+2018-03-02 22:19:50,947 INFO: New user added: SiteUser object

@@ -1,0 +1,14 @@
+{% extends 'base_authenticated.html' %}
+
+{% block content %}
+	<!--<div class="sphinx-iframe">
+		<iframe id="sphinx-iframe-obj" src="http://api.perfit.info/docs/"></iframe>
+	</div>-->
+	<div class="sphinx-site" id="sphinx-site-contianer">
+	  
+	  </div>
+<script type="text/javascript">
+  //document.getElementsByTagName("iframe")[0].style.height = window.innerHeight + "px";
+</script>
+
+{% endblock %}
