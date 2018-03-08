@@ -4,6 +4,10 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from sphinxsite import models as sphinx_models
 
+class SphinxConfigAdmin(admin.ModelAdmin):
+
+	list_display = ['root_dir']
+
 class InviteCodeAdmin(admin.ModelAdmin):
 
 	list_display = ['first_name', 'last_name', 'email', 'code', 'in_use']
@@ -20,6 +24,7 @@ class SiteUserAdmin(admin.ModelAdmin):
 
 
 
+admin.site.register(sphinx_models.SphinxConfig, SphinxConfigAdmin)
 admin.site.register(sphinx_models.InviteCode, InviteCodeAdmin)
 admin.site.register(sphinx_models.SiteUser, SiteUserAdmin)
 

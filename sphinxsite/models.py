@@ -5,6 +5,48 @@ from uuid import uuid4
 from services import signals
 
 
+class SphinxConfig(models.Model):
+	'''
+	Stores the current configuration settings for the sphinx pages. 
+
+	Because Sphinx is its own engine that generates html files that can be served
+	separately on an external website, serving those html pages through Django 
+	is tricky. The trickiness comes from the fact that Sphinx has its own static
+	file references for css and javascript. In addition, it has a bunch of embedded 
+	URLS that lead to more documentation and source code. Thankfully, all the URLs
+	are self-contained, meaning that they point to files somewhere in the sphinx 
+	directory. In order to serve them natively through Django, we need to be 
+	able to figure out where the sphinx root directory is for all sphinx-related
+	files. We can hardcode the root directory into the helper module that loads
+	the pages but that's not very user friendly. Instead, we want to make it 
+	possible for anyone to update the directory path. In addition, from a design
+	point of view, this would keep sphinx strictly independent of Django. That 
+	means wherever the sphinx engine is located, we can got there and issue 
+	'make html', which would generate the most up-to-date documentation. This may 
+	generate brand new html pages or add .rst or .txt files. As far as Django is 
+	concerned, they are just local files that need to be imported. 
+
+	This approach solves the problem of embedding an externally hosted documentation
+	site in an iframe. Embedding it defeats the purpose of having a Django site 
+	with registration and login requirements because anyone can just follow the iframe
+	source url and load the page without having to login or register. This approach 
+	ensures that the only way to access the documentation site is through the portal.
+	
+	If the root directory is not set properly, Django will fail to load the documentation
+	site.
+
+	TODO: Add more config fields as needed and update admin.py.
+	'''
+
+	help_text = "Root directory of sphinx-generated files. Eg. ../_build_html/html"
+	help_text += " where .. is the path to the parent directory"
+	root_dir = models.CharField(max_length=256)
+
+	def __unicode__(self):
+		return '%s' % (self.root_dir)
+
+
+
 class InviteCode(models.Model):
 	'''
 	Store sign-up invite code. If a new invite code is created, send an email

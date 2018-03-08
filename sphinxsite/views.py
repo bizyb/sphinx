@@ -10,7 +10,10 @@ logger = loggers.Loggers(__name__).get_logger()
 # @login_required
 def apidocs(request):
    
-    return render(request, 'sphinx.html', {})
+    page_type = helper.get_sphinx_page_type(request)
+    html = helper.load_sphinx_page(page_type)
+    context = {"html_content": html}
+    return render(request, "sphinx.html", context)
 
 
 @decorators.POST_only

@@ -88,6 +88,15 @@ def user_login(request, username, password):
 			success = True
 	return success
 
+def get_sphinx_page_type(request):
+
+	return "index.html"
+
+def load_sphinx_page(file_name):
+
+	return "test content"
+
+
 
 
 
