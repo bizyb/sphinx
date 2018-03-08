@@ -40,12 +40,25 @@ class SphinxConfig(models.Model):
 
 	help_text = "Root directory of sphinx-generated files. Eg. ../_build_html/html"
 	help_text += " where .. is the path to the parent directory"
-	root_dir = models.CharField(max_length=256)
+
+
+	root_dir = models.CharField(max_length=256, help_text=help_text)
 
 	def __unicode__(self):
 		return '%s' % (self.root_dir)
 
+	def error_codes(self):
 
+		ERROR_499 = 499
+
+		error_499_msg = "Django failed to locate the Sphinx html file requested."
+		error_499_msg += " Please check the url path given by the user."
+
+		text = """
+				ERROR {}: {} 
+				"""
+		text = text.format(ERROR_499, error_499_msg)
+		return text
 
 class InviteCode(models.Model):
 	'''

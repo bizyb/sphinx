@@ -1,6 +1,10 @@
 from django.contrib.auth.models import User
+from django.core.urlresolvers import resolve
 from django.contrib.auth import authenticate, login
 from sphinxsite.services import loggers
+from sphinxsite.models import SphinxConfig
+from bs4 import BeautifulSoup
+
 logger = loggers.Loggers(__name__).get_logger()
 
 
@@ -90,11 +94,55 @@ def user_login(request, username, password):
 
 def get_sphinx_page_type(request):
 
-	return "index.html"
+	current_url = resolve(request.path_info).url_name
+	if "/" not in current_url:
+		# We're at the landing page 
+		page_to_load = "index.html"
+	return page_to_load
+	
+	# return "index.html"
+
+def _sphinx_load_error():
+	'''
+	Generate an html error message if Django has failed to load a 
+	sphinx page.
+	'''
+	msg = "Failed to load page. Please contact Backend if the problem continues "
+	msg += "with the url of this page. ERROR 499"
+	style = """
+			width: 600px;
+			text-align: center;
+			margin: 0 auto;
+			padding-top: 50px;
+			color: #fff;
+			"""
+	html = """
+			<div class="sphinx-page-load-error"><p style="{}">{}</p></div> 
+		"""
+	html = html.format(style, msg)
+
+	return html
 
 def load_sphinx_page(file_name):
 
-	return "test content"
+	root_dir = SphinxConfig.objects.all()[0].root_dir
+	file_path = root_dir + "/" + file_name
+
+	html = _sphinx_load_error()
+
+	try:
+
+		
+
+	except Exception as e:
+		msg = '{}: {}'.format(type(e).__name__, e.args[0])
+		logger.exception(msg)
+		
+
+	return html
+
+	# print "root_dir:--------------------------------- ", root_dir 
+	# return "test content"
 
 
 

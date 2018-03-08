@@ -7,6 +7,7 @@ from sphinxsite import models as sphinx_models
 class SphinxConfigAdmin(admin.ModelAdmin):
 
 	list_display = ['root_dir']
+	readonly_fields = ["error_codes"]
 
 class InviteCodeAdmin(admin.ModelAdmin):
 
