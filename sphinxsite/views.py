@@ -7,7 +7,7 @@ from sphinxsite import models as sphinx_models
 from sphinxsite.services import loggers
 logger = loggers.Loggers(__name__).get_logger()
 
-@login_required
+# @login_required
 def apidocs(request):
    
     return render(request, 'sphinx.html', {})

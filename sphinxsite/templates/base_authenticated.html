@@ -1,15 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 
 <head>
-	<title>Perfit Official API Documentation</title>
-    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Perfit Official API Documentation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" />
+     <link rel="stylesheet" href="{% static 'css/basic.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/classic.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/pygments.css' %}" type="text/css" />
     <script type="text/javascript" src="{% static 'js/cookies.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/documentation_options.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/underscore.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/doctools.js' %}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+    <style>
+    div.body {
+        max-width: 992px !important;
+    }
+    .logout-container {
+        float: right;
+        color: #fff;
+        text-transform: uppercase;
+        background: red !important;
+        font-weight: 700;
+        font-size: 14px;
+        padding: 5px;
+        margin-right: 20px;
+}
+.logout-container a {
+  text-decoration: none;
+  color: inherit;
+}
+    </style>
 </head>
 <body>
 	<div class="logout-container">

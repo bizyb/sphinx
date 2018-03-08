@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'lz!k_xq7d8^f2q&8i=u!h@#!bp_-8fai-khdvwv9%n60+t&wjr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS =  [
                     'api.perfit.info',
