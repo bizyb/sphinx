@@ -466,3 +466,8 @@ Traceback (most recent call last):
   File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 181, in load_sphinx_page
     with open(file_path, "r") as f:
 IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/_build/html/backend.html?highlight=cloth%20model'
+2018-03-09 02:36:02,692 ERROR: IOError: 2
+Traceback (most recent call last):
+  File "/Users/bm/usc/perfit_docenv/perfit_documentation/sphinxsite/services/helper.py", line 182, in load_sphinx_page
+    with open(file_path, "r") as f:
+IOError: [Errno 2] No such file or directory: u'/Users/bm/usc/perfit_docenv/perfit_documentation/sphinx_html/_build/html/logout'
