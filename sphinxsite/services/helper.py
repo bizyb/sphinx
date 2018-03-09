@@ -190,7 +190,21 @@ def load_sphinx_page(request):
 	return html
 
 def sphinx_search_index(request):
-	return True
+	'''
+	Return the dynamically-generated search index.
+
+	Note: the search index is a javascript code. 
+	'''
+	js = None
+	file_path = _get_sphinx_file_path(request)
+	if "search.html" in file_path:
+		# searchindex.js is in the same directory as the main 
+		# html files
+		file_path = file_path.replace("search.html", "searchindex.js")
+
+		with open(file_path, "r") as f:
+			js = f.read()
+	return js
 
 	
 
