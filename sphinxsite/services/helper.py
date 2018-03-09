@@ -116,10 +116,23 @@ def _get_sphinx_file_path(request):
 
 	if not filename:
 		# filename should be empty if we're on the landing page
+
 		current_url = "index.html"
-	
 
 	file_path = root_dir + "/" + current_url
+
+	if "search.html" in file_path:
+		# if search page is requested, the request could contain a GET 
+		# querystring in its path, which needs to be truncated
+		file_path = file_path.split("search.html")[0] + "search.html"
+
+	if "highlight=" in file_path:
+		# If highlight is enabled (usually happens when the user clicks on 
+		# a search result, highlight=search_term querystring is added to the 
+		# url. We need to remove them. It doesn't effect the behavior of
+		# the page generated because the querystring is only used by the 
+		# client js to do its job.  
+		file_path = file_path.split("?")[0]
 
 	return file_path
 
@@ -129,7 +142,7 @@ def _sphinx_load_error():
 	Generate an html error message if Django has failed to load a 
 	sphinx page.
 	'''
-	msg = "Failed to load page. Please contact Backend if the problem continues "
+	msg = "Failed to load page. Please contact the Backend Team if the problem continues "
 	msg += "with the url of this page. ERROR 499"
 	style = """
 			width: 600px;
@@ -162,9 +175,7 @@ def _parse_html(raw, file_path):
 
 def load_sphinx_page(request):
 
-	
-	file_path = _get_sphinx_file_path(request)
-	
+	file_path = _get_sphinx_file_path(request)	
 	html = _sphinx_load_error()
 
 	try:
@@ -177,6 +188,9 @@ def load_sphinx_page(request):
 		logger.exception(msg)
 		
 	return html
+
+def sphinx_search_index(request):
+	return True
 
 	
 

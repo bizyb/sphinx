@@ -11,7 +11,13 @@ logger = loggers.Loggers(__name__).get_logger()
 def apidocs(request):
    
     html = helper.load_sphinx_page(request)
-    context = {"html_content": html}
+    search_index = helper.sphinx_search_index(request)
+
+    context = { 
+                "html_content": html, 
+                "search_index":search_index,
+                "is_search_page": True if search_index else False,
+            }
     return render(request, "sphinx.html", context)
 
 
